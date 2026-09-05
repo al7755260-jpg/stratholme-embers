@@ -1,0 +1,870 @@
+{
+  "prepared_at": "2026-09-05T15:01:15.885346+00:00",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source_folder": "../sfx-source",
+  "sources": [
+    {
+      "id": "swishes__swosh-07.flac",
+      "file": "swishes__swosh-07.flac",
+      "original_filename": "swosh-07.flac",
+      "archive_member": "swosh-07.flac",
+      "author": "Iwan Gabovitch (qubodup)",
+      "source_url": "https://opengameart.org/content/swish-bamboo-stick-weapon-swhoshes",
+      "download_url": "https://opengameart.org/sites/default/files/swoshes.7z",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "2c33fea0dd6daed6e68e39d13be78d90455698650415d54a9af3fdfb3f1437b2",
+      "bytes": 56894
+    },
+    {
+      "id": "swishes__swosh-15.flac",
+      "file": "swishes__swosh-15.flac",
+      "original_filename": "swosh-15.flac",
+      "archive_member": "swosh-15.flac",
+      "author": "Iwan Gabovitch (qubodup)",
+      "source_url": "https://opengameart.org/content/swish-bamboo-stick-weapon-swhoshes",
+      "download_url": "https://opengameart.org/sites/default/files/swoshes.7z",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "a32817276bb9b6029a4c04c9c80ce9cfcb5d11a143b243e57a8187a0a0032ebf",
+      "bytes": 71596
+    },
+    {
+      "id": "swishes__swosh-26.flac",
+      "file": "swishes__swosh-26.flac",
+      "original_filename": "swosh-26.flac",
+      "archive_member": "swosh-26.flac",
+      "author": "Iwan Gabovitch (qubodup)",
+      "source_url": "https://opengameart.org/content/swish-bamboo-stick-weapon-swhoshes",
+      "download_url": "https://opengameart.org/sites/default/files/swoshes.7z",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "7159ba26b74840da53965989c1472807891298528f94d720119777c251b3109e",
+      "bytes": 72542
+    },
+    {
+      "id": "thwack__thwack-01.wav",
+      "file": "thwack__thwack-01.wav",
+      "original_filename": "thwack-01.wav",
+      "archive_member": "PCM/thwack-01.wav",
+      "author": "Jordan Irwin (AntumDeluge)",
+      "source_url": "https://opengameart.org/content/thwack-sounds",
+      "download_url": "https://opengameart.org/sites/default/files/thwack-1.0.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "bb48616d77a89fff6a40ded7244f2e0473dbd7d6b51855927f9b8a4f83a8a037",
+      "bytes": 27758
+    },
+    {
+      "id": "thwack__thwack-10.wav",
+      "file": "thwack__thwack-10.wav",
+      "original_filename": "thwack-10.wav",
+      "archive_member": "PCM/thwack-10.wav",
+      "author": "Jordan Irwin (AntumDeluge)",
+      "source_url": "https://opengameart.org/content/thwack-sounds",
+      "download_url": "https://opengameart.org/sites/default/files/thwack-1.0.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "9b69981665fcbf8bb76c9709ce23e00a6f9a70ed9939690ec20d6e812f5b36c2",
+      "bytes": 44080
+    },
+    {
+      "id": "kenney-impact__impactSoft_heavy_000.ogg",
+      "file": "kenney-impact__impactSoft_heavy_000.ogg",
+      "original_filename": "impactSoft_heavy_000.ogg",
+      "archive_member": "Audio/impactSoft_heavy_000.ogg",
+      "author": "Kenney",
+      "source_url": "https://kenney.nl/assets/impact-sounds",
+      "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "49e7ca88743fca974bb8676ea138b751cfd8f9033b5e7af8736c2a215d6edbc1",
+      "bytes": 6570
+    },
+    {
+      "id": "kenney-impact__impactSoft_heavy_001.ogg",
+      "file": "kenney-impact__impactSoft_heavy_001.ogg",
+      "original_filename": "impactSoft_heavy_001.ogg",
+      "archive_member": "Audio/impactSoft_heavy_001.ogg",
+      "author": "Kenney",
+      "source_url": "https://kenney.nl/assets/impact-sounds",
+      "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "4d0096364ba9e46119d2ff6df493fdc101bd2e1efae061da5e5f77a53b3fdcb6",
+      "bytes": 6689
+    },
+    {
+      "id": "kenney-impact__impactSoft_heavy_003.ogg",
+      "file": "kenney-impact__impactSoft_heavy_003.ogg",
+      "original_filename": "impactSoft_heavy_003.ogg",
+      "archive_member": "Audio/impactSoft_heavy_003.ogg",
+      "author": "Kenney",
+      "source_url": "https://kenney.nl/assets/impact-sounds",
+      "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "d00286a2dc62ee5cb4d42bf56120e7050a855f69e655fc1294410aadd337eba3",
+      "bytes": 6665
+    },
+    {
+      "id": "kenney-impact__impactMetal_heavy_000.ogg",
+      "file": "kenney-impact__impactMetal_heavy_000.ogg",
+      "original_filename": "impactMetal_heavy_000.ogg",
+      "archive_member": "Audio/impactMetal_heavy_000.ogg",
+      "author": "Kenney",
+      "source_url": "https://kenney.nl/assets/impact-sounds",
+      "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "e07045693e4a2b3d165c424e3dab4c781d9ff8880a386880ac89a51315d7f831",
+      "bytes": 6110
+    },
+    {
+      "id": "crunch__impactcrunch03.mp3.flac",
+      "file": "crunch__impactcrunch03.mp3.flac",
+      "original_filename": "impactcrunch03.mp3.flac",
+      "archive_member": "impcrunch/impactcrunch03.mp3.flac",
+      "author": "Independent.nu (submitted by qubodup)",
+      "source_url": "https://opengameart.org/content/5-break-crunch-impacts",
+      "download_url": "https://opengameart.org/sites/default/files/independent_nu_ljudbank-break_crunch_impact.7z",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "ecbe1d2f3e2347ef2ce8b251f7972f50d764e5156f92a01e6085d261f7f15ee6",
+      "bytes": 69948
+    },
+    {
+      "id": "crunch__impactcrunch04.mp3.flac",
+      "file": "crunch__impactcrunch04.mp3.flac",
+      "original_filename": "impactcrunch04.mp3.flac",
+      "archive_member": "impcrunch/impactcrunch04.mp3.flac",
+      "author": "Independent.nu (submitted by qubodup)",
+      "source_url": "https://opengameart.org/content/5-break-crunch-impacts",
+      "download_url": "https://opengameart.org/sites/default/files/independent_nu_ljudbank-break_crunch_impact.7z",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "effbbbf7876b3fc9f73c3df89cf20bc72932ad4e1f7e8644319a6572fd563581",
+      "bytes": 64271
+    },
+    {
+      "id": "zombie-moans__darsycho__zombie-moans_0.ogg",
+      "file": "zombie-moans__darsycho__zombie-moans_0.ogg",
+      "original_filename": "darsycho__zombie-moans_0.ogg",
+      "archive_member": "darsycho__zombie-moans_0.ogg",
+      "author": "Darsycho",
+      "source_url": "https://opengameart.org/content/zombie-moans",
+      "download_url": "https://opengameart.org/sites/default/files/darsycho__zombie-moans_0.ogg",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "49b0bd7a7908f2b3ea61ae93ccf584ab650705d62e8ed6d4c8c9f5b98ad37b05",
+      "bytes": 181933
+    },
+    {
+      "id": "monsters__monster-1.wav",
+      "file": "monsters__monster-1.wav",
+      "original_filename": "monster-1.wav",
+      "archive_member": "monster_sfx_pack_2/monster-1.wav",
+      "author": "Ogrebane",
+      "source_url": "https://opengameart.org/content/monster-sound-effects-2",
+      "download_url": "https://opengameart.org/sites/default/files/monster_sfx_pack_2.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "e75b804529fd936c299dfd0121e284d38455bc111ae93b1d3c6988bcc74a441d",
+      "bytes": 265692
+    },
+    {
+      "id": "monsters__monster-4.wav",
+      "file": "monsters__monster-4.wav",
+      "original_filename": "monster-4.wav",
+      "archive_member": "monster_sfx_pack_2/monster-4.wav",
+      "author": "Ogrebane",
+      "source_url": "https://opengameart.org/content/monster-sound-effects-2",
+      "download_url": "https://opengameart.org/sites/default/files/monster_sfx_pack_2.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "30540cb9954b3332474173db515f9af6bd2783641aab110d4a7132a16c6d178f",
+      "bytes": 155298
+    },
+    {
+      "id": "human-pain__death pain grunts.wav",
+      "file": "human-pain__death pain grunts.wav",
+      "original_filename": "death pain grunts.wav",
+      "archive_member": "death pain grunts.wav",
+      "author": "thebardofblasphemy",
+      "source_url": "https://opengameart.org/content/grunts-male-death-and-pain",
+      "download_url": "https://opengameart.org/sites/default/files/death%20pain%20grunts.wav",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "3f00fba827f20ff9ccea1bc07d2c21ab8d3a36e81b48a6005cf8459f02779586",
+      "bytes": 4380108
+    },
+    {
+      "id": "kenney-impact__footstep_concrete_000.ogg",
+      "file": "kenney-impact__footstep_concrete_000.ogg",
+      "original_filename": "footstep_concrete_000.ogg",
+      "archive_member": "Audio/footstep_concrete_000.ogg",
+      "author": "Kenney",
+      "source_url": "https://kenney.nl/assets/impact-sounds",
+      "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "d7267e183067757c92c169de2a379abea592cfca6b39bb2e8feea15221ad79fe",
+      "bytes": 5808
+    },
+    {
+      "id": "kenney-impact__footstep_concrete_003.ogg",
+      "file": "kenney-impact__footstep_concrete_003.ogg",
+      "original_filename": "footstep_concrete_003.ogg",
+      "archive_member": "Audio/footstep_concrete_003.ogg",
+      "author": "Kenney",
+      "source_url": "https://kenney.nl/assets/impact-sounds",
+      "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "8b513c2f0316324060b9174b8f28df6c2147418c506e6a53b77f18e149a5547b",
+      "bytes": 5805
+    }
+  ],
+  "sounds": [
+    {
+      "key": "swing-1",
+      "role": "普通锤击挥动 1",
+      "layers": [
+        {
+          "source": "swishes__swosh-07.flac",
+          "trim_seconds": null,
+          "playback_rate": 0.83,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=65",
+            "lowpass=f=9500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -3,
+      "suggested_gain": 0.2,
+      "file": "swing-1.ogg",
+      "duration_seconds": 0.3978,
+      "bytes": 6995,
+      "sha256": "0a1937cca11e480e811e29e05ecb9774b412affe9c5cfe457b35fb43448cd331",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -20.5,
+        "max_volume": -3.1
+      },
+      "post_mix_gain_db": 12.5,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "swing-2",
+      "role": "普通锤击挥动 2",
+      "layers": [
+        {
+          "source": "swishes__swosh-15.flac",
+          "trim_seconds": null,
+          "playback_rate": 0.9,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=65",
+            "lowpass=f=9500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -3,
+      "suggested_gain": 0.2,
+      "file": "swing-2.ogg",
+      "duration_seconds": 0.4617,
+      "bytes": 7386,
+      "sha256": "525606369be943b2664196da133b43917bd959954f71729286b3fe713e721042",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -20.5,
+        "max_volume": -2.7
+      },
+      "post_mix_gain_db": 10.9,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "swing-3",
+      "role": "重挥 / 闪避挥动",
+      "layers": [
+        {
+          "source": "swishes__swosh-26.flac",
+          "trim_seconds": null,
+          "playback_rate": 0.73,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=55",
+            "lowpass=f=8200"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -3,
+      "suggested_gain": 0.23,
+      "file": "swing-3.ogg",
+      "duration_seconds": 0.5838,
+      "bytes": 8299,
+      "sha256": "e6f78fb717ced6fc7f39b022e5cec57770758d5f759aecbc6dbb1fac79e715e1",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -18.3,
+        "max_volume": -3.1
+      },
+      "post_mix_gain_db": 13.7,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "hit-1",
+      "role": "钝击主层 + 肉感低频 + 薄金属瞬态 1",
+      "layers": [
+        {
+          "source": "thwack__thwack-01.wav",
+          "trim_seconds": null,
+          "playback_rate": 0.82,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=45",
+            "lowpass=f=7000"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "kenney-impact__impactSoft_heavy_000.ogg",
+          "trim_seconds": [
+            0,
+            0.36
+          ],
+          "playback_rate": 0.78,
+          "gain_db": -4,
+          "filters": [
+            "highpass=f=40",
+            "lowpass=f=2800"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "kenney-impact__impactMetal_heavy_000.ogg",
+          "trim_seconds": null,
+          "playback_rate": 0.85,
+          "gain_db": -15,
+          "filters": [
+            "highpass=f=450",
+            "lowpass=f=6500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -3,
+      "suggested_gain": 0.48,
+      "file": "hit-1.ogg",
+      "duration_seconds": 0.4578,
+      "bytes": 7220,
+      "sha256": "bf1d61f4288160749e789aee912f66c4ab32710d4063fcef4fcb9a077e454387",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -23.2,
+        "max_volume": -3.2
+      },
+      "post_mix_gain_db": 7.4,
+      "fade_in_seconds": 0.0005,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "hit-2",
+      "role": "钝击主层 + 肉感低频 + 薄金属瞬态 2",
+      "layers": [
+        {
+          "source": "thwack__thwack-10.wav",
+          "trim_seconds": null,
+          "playback_rate": 0.88,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=45",
+            "lowpass=f=6800"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "kenney-impact__impactSoft_heavy_001.ogg",
+          "trim_seconds": [
+            0,
+            0.42
+          ],
+          "playback_rate": 0.82,
+          "gain_db": -4,
+          "filters": [
+            "highpass=f=40",
+            "lowpass=f=2800"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "kenney-impact__impactMetal_heavy_000.ogg",
+          "trim_seconds": null,
+          "playback_rate": 0.93,
+          "gain_db": -15,
+          "filters": [
+            "highpass=f=600",
+            "lowpass=f=6200"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -3,
+      "suggested_gain": 0.48,
+      "file": "hit-2.ogg",
+      "duration_seconds": 0.5657,
+      "bytes": 9241,
+      "sha256": "3602c1db7bdd343bf2d3ecd21f74b5794f194eb7ec7d0d49c1a11ef5f5e2582c",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -21.2,
+        "max_volume": -2.9
+      },
+      "post_mix_gain_db": 11.4,
+      "fade_in_seconds": 0.0005,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "heavy",
+      "role": "重砸：肉钝击 + 低中频冲击 + 骨裂拟音 + 少量金属",
+      "layers": [
+        {
+          "source": "thwack__thwack-10.wav",
+          "trim_seconds": null,
+          "playback_rate": 0.7,
+          "gain_db": -1,
+          "filters": [
+            "highpass=f=38",
+            "lowpass=f=6000"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "kenney-impact__impactSoft_heavy_003.ogg",
+          "trim_seconds": [
+            0,
+            0.4
+          ],
+          "playback_rate": 0.64,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=35",
+            "bass=g=4:f=180:w=.8",
+            "lowpass=f=2500"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "crunch__impactcrunch03.mp3.flac",
+          "trim_seconds": [
+            0.085,
+            0.81
+          ],
+          "playback_rate": 0.78,
+          "gain_db": -6,
+          "filters": [
+            "highpass=f=180",
+            "lowpass=f=7200"
+          ],
+          "delay_ms": 12
+        },
+        {
+          "source": "kenney-impact__impactMetal_heavy_000.ogg",
+          "trim_seconds": null,
+          "playback_rate": 0.68,
+          "gain_db": -16,
+          "filters": [
+            "highpass=f=400",
+            "lowpass=f=5400"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -3,
+      "suggested_gain": 0.65,
+      "file": "heavy.ogg",
+      "duration_seconds": 0.9415,
+      "bytes": 11695,
+      "sha256": "0481c2731ddf01c4bb07160a527f24d5a7749391316f4e1613494b98f60b9b8a",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -21.0,
+        "max_volume": -2.9
+      },
+      "post_mix_gain_db": 4.6,
+      "fade_in_seconds": 0.0005,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "zombie-1",
+      "role": "僵尸呻吟 1",
+      "layers": [
+        {
+          "source": "zombie-moans__darsycho__zombie-moans_0.ogg",
+          "trim_seconds": [
+            0.185,
+            3.1
+          ],
+          "playback_rate": 1,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=85",
+            "lowpass=f=8500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -5,
+      "suggested_gain": 0.18,
+      "file": "zombie-1.ogg",
+      "duration_seconds": 2.915,
+      "bytes": 29331,
+      "sha256": "a2fdb8c4b65f2bb44f44ccf286fb2b910e28b3c5e6721a82ae5238fbfcc38ef1",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -22.9,
+        "max_volume": -5.1
+      },
+      "post_mix_gain_db": 8.1,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.045
+    },
+    {
+      "key": "zombie-2",
+      "role": "僵尸呻吟 2",
+      "layers": [
+        {
+          "source": "zombie-moans__darsycho__zombie-moans_0.ogg",
+          "trim_seconds": [
+            3.61,
+            6.34
+          ],
+          "playback_rate": 1,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=85",
+            "lowpass=f=8500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -5,
+      "suggested_gain": 0.18,
+      "file": "zombie-2.ogg",
+      "duration_seconds": 2.73,
+      "bytes": 28009,
+      "sha256": "99ee2fb153c4b34eacf4069b63cc94add4efdc4797f606848e5f12bb574decb9",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -21.0,
+        "max_volume": -5.0
+      },
+      "post_mix_gain_db": 10.6,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.045
+    },
+    {
+      "key": "zombie-3",
+      "role": "僵尸呻吟 3",
+      "layers": [
+        {
+          "source": "zombie-moans__darsycho__zombie-moans_0.ogg",
+          "trim_seconds": [
+            6.57,
+            8.99
+          ],
+          "playback_rate": 1,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=85",
+            "lowpass=f=8500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -5,
+      "suggested_gain": 0.18,
+      "file": "zombie-3.ogg",
+      "duration_seconds": 2.42,
+      "bytes": 26595,
+      "sha256": "4281507aae33752ccf9fc2121af1dd573cea692fa4c5c381e7b3e8adf369a5e5",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -18.8,
+        "max_volume": -4.8
+      },
+      "post_mix_gain_db": 15.2,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.045
+    },
+    {
+      "key": "brute-1",
+      "role": "憎恶低吼 1",
+      "layers": [
+        {
+          "source": "monsters__monster-1.wav",
+          "trim_seconds": null,
+          "playback_rate": 0.8,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=48",
+            "lowpass=f=6500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -4,
+      "suggested_gain": 0.3,
+      "file": "brute-1.ogg",
+      "duration_seconds": 1.25,
+      "bytes": 11761,
+      "sha256": "0c9fada0d750faf5442be928bcc017533f070074a6ff3c07a809a2577e7d2cc2",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -24.7,
+        "max_volume": -4.2
+      },
+      "post_mix_gain_db": 4.4,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.045
+    },
+    {
+      "key": "brute-2",
+      "role": "憎恶短咆哮 2",
+      "layers": [
+        {
+          "source": "monsters__monster-4.wav",
+          "trim_seconds": null,
+          "playback_rate": 0.76,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=48",
+            "lowpass=f=6500"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -4,
+      "suggested_gain": 0.3,
+      "file": "brute-2.ogg",
+      "duration_seconds": 0.7676,
+      "bytes": 7950,
+      "sha256": "2e7c63762d4fd3ae63732e1254e64a7c3ec8755dcdb22e221cfc7beb40598cf7",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -18.1,
+        "max_volume": -4.0
+      },
+      "post_mix_gain_db": 6.6,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "footstep-1",
+      "role": "石地脚步 1",
+      "layers": [
+        {
+          "source": "kenney-impact__footstep_concrete_000.ogg",
+          "trim_seconds": null,
+          "playback_rate": 0.83,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=65",
+            "lowpass=f=6800"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -7,
+      "suggested_gain": 0.18,
+      "file": "footstep-1.ogg",
+      "duration_seconds": 0.1241,
+      "bytes": 4467,
+      "sha256": "24018005f46aaa1778edaf78e216f1be14f5ab4298df3bcd067cf64e7461ad06",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -24.5,
+        "max_volume": -7.1
+      },
+      "post_mix_gain_db": 8.4,
+      "fade_in_seconds": 0.0005,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "footstep-2",
+      "role": "石地脚步 2",
+      "layers": [
+        {
+          "source": "kenney-impact__footstep_concrete_003.ogg",
+          "trim_seconds": null,
+          "playback_rate": 0.86,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=65",
+            "lowpass=f=6800"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -7,
+      "suggested_gain": 0.18,
+      "file": "footstep-2.ogg",
+      "duration_seconds": 0.1251,
+      "bytes": 4494,
+      "sha256": "9649c28848cd311067f178454f6a1f6d6fe43574593a101ac99a4a706cdffb75",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -25.9,
+        "max_volume": -7.0
+      },
+      "post_mix_gain_db": 7.9,
+      "fade_in_seconds": 0.0005,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "hurt",
+      "role": "男性短促受伤哼声",
+      "layers": [
+        {
+          "source": "human-pain__death pain grunts.wav",
+          "trim_seconds": [
+            6.92,
+            7.43
+          ],
+          "playback_rate": 1,
+          "gain_db": 0,
+          "filters": [
+            "highpass=f=80",
+            "lowpass=f=8000"
+          ],
+          "delay_ms": 0
+        }
+      ],
+      "target_peak_dbfs": -4,
+      "suggested_gain": 0.5,
+      "file": "hurt.ogg",
+      "duration_seconds": 0.51,
+      "bytes": 8071,
+      "sha256": "c5b6a5e7c85b3315ea404152e8b1e2a82a4ad3511a48a51960a527a3fb4f11be",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -15.6,
+        "max_volume": -4.1
+      },
+      "post_mix_gain_db": 16.9,
+      "fade_in_seconds": 0.003,
+      "fade_out_seconds": 0.025
+    },
+    {
+      "key": "kill",
+      "role": "亡灵死亡：脆裂 + 钝击 + 短呻吟",
+      "layers": [
+        {
+          "source": "crunch__impactcrunch04.mp3.flac",
+          "trim_seconds": [
+            0.085,
+            0.75
+          ],
+          "playback_rate": 0.82,
+          "gain_db": -3,
+          "filters": [
+            "highpass=f=160",
+            "lowpass=f=7000"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "thwack__thwack-10.wav",
+          "trim_seconds": null,
+          "playback_rate": 0.75,
+          "gain_db": -3,
+          "filters": [
+            "highpass=f=45",
+            "lowpass=f=5000"
+          ],
+          "delay_ms": 0
+        },
+        {
+          "source": "zombie-moans__darsycho__zombie-moans_0.ogg",
+          "trim_seconds": [
+            14.77,
+            15.79
+          ],
+          "playback_rate": 0.9,
+          "gain_db": -7,
+          "filters": [
+            "highpass=f=90",
+            "lowpass=f=6500"
+          ],
+          "delay_ms": 25
+        }
+      ],
+      "target_peak_dbfs": -4,
+      "suggested_gain": 0.28,
+      "file": "kill.ogg",
+      "duration_seconds": 1.1583,
+      "bytes": 13357,
+      "sha256": "01a4c6c39381a6f055b166efdb1ff0f0b31569427026daa1af40e075c1fe146c",
+      "codec": "vorbis",
+      "sample_rate": 44100,
+      "channels": 1,
+      "measured_dbfs": {
+        "mean_volume": -24.0,
+        "max_volume": -4.3
+      },
+      "post_mix_gain_db": 8.5,
+      "fade_in_seconds": 0.0005,
+      "fade_out_seconds": 0.045
+    }
+  ],
+  "aliases": {
+    "dodge": "swing-3"
+  },
+  "verification": "All outputs decoded with ffmpeg, duration/codec/channel count/peak measured. Audio-input tool unavailable: listening has not been performed. Final in-game audition required.",
+  "total_audio_bytes": 184871,
+  "integration_notes": [
+    "All impact layers are already premixed: play one hit file per swing rather than one per enemy when a sweep hits many enemies.",
+    "For grouped hit targets, vary playbackRate 0.92-1.06 and alternate hit-1/hit-2. Do not stack heavy and hit at full gain.",
+    "Limit ambient zombie voices globally to 1-2 simultaneous sounds; use positional attenuation. Brute voices have priority.",
+    "Keep footsteps much quieter than attacks; alternate variants at foot plants.",
+    "Dodge reuses swing-3, suggested gain 0.14 and playbackRate 1.25.",
+    "Suggested gains are starting points, not a final master mix.",
+    "Crunch source is ordinary break/crunch Foley, repurposed as fantasy bone-break sound, not a literal injury recording."
+  ]
+}

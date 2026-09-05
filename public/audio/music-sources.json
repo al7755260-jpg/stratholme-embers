@@ -1,0 +1,78 @@
+{
+  "checkedDate": "2026-09-05",
+  "tracks": [
+    {
+      "id": "epic-march",
+      "displayTitle": "瘟疫行军",
+      "title": "Epic March Loop",
+      "artist": "Eldritch Grim",
+      "file": "music/epic-march.ogg",
+      "sourceFile": "epic-march-loop-source.wav",
+      "sourceUrl": "https://opengameart.org/content/epic-march-loop",
+      "downloadUrl": "https://opengameart.org/sites/default/files/the_march_of_devils_dome_loop.wav",
+      "license": "CC0-1.0",
+      "default": true,
+      "processing": "One complete 43.582494-second source loop; fixed gain -12.51 dB; 8 ms endpoint de-click fades; Vorbis quality 3, 44.1 kHz stereo. No dynamic compression, composition, or AI generation.",
+      "loopNote": "The author identifies the source as a medieval war loop. The web asset retains one complete phrase; use Web Audio buffer looping over the complete decoded buffer.",
+      "durationSeconds": 43.582494,
+      "bytes": 619925,
+      "sha256": "d7e70e11dbf7b81bcec3b53e9295f27a95df27b4c5545de6f0b13463d7b60325",
+      "codec": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "integratedLufs": -23.07,
+      "truePeakDbtp": -11.76,
+      "loudnessRangeLu": 6.8,
+      "loopBoundaryJumpDbfsPerChannel": [
+        -68.201,
+        -76.765
+      ],
+      "decodedSuccessfully": true
+    },
+    {
+      "id": "dark-shrine",
+      "displayTitle": "幽暗圣殿",
+      "title": "Dark Shrine Loop",
+      "artist": "qubodup",
+      "additionalCredit": "A slight remix of Shrine by yd, as credited on the source page.",
+      "file": "music/dark-shrine.ogg",
+      "sourceFile": "dark-shrine-loop.ogg",
+      "sourceUrl": "https://opengameart.org/content/dark-shrine-loop",
+      "downloadUrl": "https://opengameart.org/sites/default/files/qubodup-yd-DarkShrineLoop-OpenGameArt.ogg",
+      "license": "CC0-1.0",
+      "default": false,
+      "processing": "Full source retained; fixed gain -1.00 dB; Vorbis quality 3, 44.1 kHz stereo. No dynamic compression, composition, or AI generation.",
+      "loopNote": "Author-provided loop with a natural decay and brief quiet end. It loops without a sample discontinuity, but is not an uninterrupted drone.",
+      "durationSeconds": 56.572517,
+      "bytes": 585483,
+      "sha256": "c3f06b430df6c25ee1cb8c3508d3d5ecd9bbc15e082f9949273473b0a1fc11cd",
+      "codec": {
+        "codec_name": "vorbis",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      "integratedLufs": -23.05,
+      "truePeakDbtp": -7.8,
+      "loudnessRangeLu": 5.7,
+      "loopBoundaryJumpDbfsPerChannel": [
+        -159.546,
+        -160.721
+      ],
+      "decodedSuccessfully": true
+    }
+  ],
+  "totalWebAudioBytes": 1205408,
+  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "licenseFile": "LICENSE-CC0-1.0.txt",
+  "officialWowReference": {
+    "title": "The Undercity",
+    "artist": "Derek Duke",
+    "album": "World of Warcraft Original Soundtrack",
+    "duration": "2:28",
+    "url": "https://worldofwarcraft.bandcamp.com/track/the-undercity",
+    "status": "Official streaming preview and paid album download listing. All rights reserved. No audio was downloaded or extracted."
+  },
+  "auditionStatus": "Source pages, authorship, licenses, full decoding, loudness, duration and loop boundaries verified. Musical suitability is inferred from author descriptions; no claim of a real-time speaker audition."
+}

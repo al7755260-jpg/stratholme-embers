@@ -1,0 +1,280 @@
+{
+  "generator": "Hyper3D Rodin",
+  "referenceWorkflow": "User references -> imagegen character reference -> image-to-3D",
+  "format": "GLB",
+  "frontAxis": "+Z",
+  "upAxis": "+Y",
+  "floorY": 0,
+  "models": {
+    "zombie": {
+      "file": "undead-zombie.glb",
+      "generationId": "1aaa246b-46ed-42c6-9afd-b28f1b186ece",
+      "displayUrl": "https://hyper3d.ai/workspace/rodin/1aaa246b-46ed-42c6-9afd-b28f1b186ece",
+      "inputBytes": 32218696,
+      "inputSha256": "98968da256f4c80f2ac800d8815d258bd3b602174e3e06de5e41ed916f049114",
+      "fileBytes": 1019692,
+      "sha256": "3cd8d612316f8736625796e54320f4c2238efdb0d10d437dcfde73813a27bccf",
+      "triangles": 8000,
+      "vertices": 6747,
+      "meshes": 1,
+      "bounds": {
+        "min": [
+          -0.593252,
+          0.0,
+          -0.326448
+        ],
+        "max": [
+          0.586655,
+          1.900153,
+          0.327246
+        ],
+        "size": [
+          1.179907,
+          1.900153,
+          0.653694
+        ]
+      },
+      "frontAxis": "+Z",
+      "upAxis": "+Y",
+      "floorY": 0,
+      "orientationCorrectionDegrees": 0,
+      "textureMaxDimension": 1024,
+      "textures": [
+        {
+          "name": "texture_normal",
+          "mimeType": "image/jpeg",
+          "bytes": 170752
+        },
+        {
+          "name": "texture_diffuse",
+          "mimeType": "image/jpeg",
+          "bytes": 257310
+        },
+        {
+          "name": "texture_metallic-texture_roughness",
+          "mimeType": "image/jpeg",
+          "bytes": 326005
+        }
+      ],
+      "materials": [
+        {
+          "name": "model",
+          "doubleSided": true,
+          "alphaMode": "OPAQUE"
+        }
+      ],
+      "postprocessing": [
+        "Isolated background Blender",
+        "Weld coincident vertices while retaining per-loop UVs",
+        "Recalculate continuous smooth normals",
+        "Global triangle-budget decimation",
+        "1024px JPEG PBR textures",
+        "No palette recoloring",
+        "No pose, rig, gameplay or live Blender scene changes"
+      ]
+    },
+    "forsaken": {
+      "file": "undead-forsaken.glb",
+      "generationId": "333462cb-5249-4c15-b214-98e8b13ceae7",
+      "displayUrl": "https://hyper3d.ai/workspace/rodin/333462cb-5249-4c15-b214-98e8b13ceae7",
+      "inputBytes": 28182664,
+      "inputSha256": "dab3cd386c0fdefbea018e176630ac0f965362bdab747b9f4fda7bcaf1b48a6c",
+      "fileBytes": 922108,
+      "sha256": "4244dd61a82aa44ce5057ee9f4aa8ea65d90e0cdd660ee296ac486b917dbde89",
+      "triangles": 10000,
+      "vertices": 7224,
+      "meshes": 1,
+      "bounds": {
+        "min": [
+          -0.592227,
+          0.0,
+          -0.243407
+        ],
+        "max": [
+          0.59159,
+          1.896068,
+          0.255288
+        ],
+        "size": [
+          1.183817,
+          1.896068,
+          0.498695
+        ]
+      },
+      "frontAxis": "+Z",
+      "upAxis": "+Y",
+      "floorY": 0,
+      "orientationCorrectionDegrees": 0,
+      "textureMaxDimension": 1024,
+      "textures": [
+        {
+          "name": "texture_normal",
+          "mimeType": "image/jpeg",
+          "bytes": 188378
+        },
+        {
+          "name": "texture_diffuse",
+          "mimeType": "image/jpeg",
+          "bytes": 271590
+        },
+        {
+          "name": "texture_metallic-texture_roughness",
+          "mimeType": "image/jpeg",
+          "bytes": 169247
+        }
+      ],
+      "materials": [
+        {
+          "name": "model",
+          "doubleSided": true,
+          "alphaMode": "OPAQUE"
+        }
+      ],
+      "postprocessing": [
+        "Isolated background Blender",
+        "Weld coincident vertices while retaining per-loop UVs",
+        "Recalculate continuous smooth normals",
+        "Global triangle-budget decimation",
+        "1024px JPEG PBR textures",
+        "No palette recoloring",
+        "No pose, rig, gameplay or live Blender scene changes"
+      ]
+    },
+    "abomination": {
+      "file": "undead-abomination.glb",
+      "generationId": "ed79f412-ae61-4b6f-8e1e-489cf2b41cb0",
+      "displayUrl": "https://hyper3d.ai/workspace/rodin/ed79f412-ae61-4b6f-8e1e-489cf2b41cb0",
+      "inputBytes": 37284676,
+      "inputSha256": "262c120bccf5f00edd3cd26ada72b4fdb47cc725881e3c672b4e25d161bbd82a",
+      "fileBytes": 1654256,
+      "sha256": "6a65816ceb8e87ce5bb59ec7c5ac53d283f90ec4b58700c344a91ade894470d4",
+      "triangles": 13997,
+      "vertices": 14610,
+      "meshes": 1,
+      "bounds": {
+        "min": [
+          -0.809993,
+          0.0,
+          -0.454576
+        ],
+        "max": [
+          0.814385,
+          1.897142,
+          0.45474
+        ],
+        "size": [
+          1.624378,
+          1.897142,
+          0.909316
+        ]
+      },
+      "frontAxis": "+Z",
+      "upAxis": "+Y",
+      "floorY": 0,
+      "orientationCorrectionDegrees": 0,
+      "textureMaxDimension": 1536,
+      "textures": [
+        {
+          "name": "texture_normal",
+          "mimeType": "image/jpeg",
+          "bytes": 259566
+        },
+        {
+          "name": "texture_diffuse",
+          "mimeType": "image/jpeg",
+          "bytes": 407918
+        },
+        {
+          "name": "texture_metallic-texture_roughness",
+          "mimeType": "image/jpeg",
+          "bytes": 433535
+        }
+      ],
+      "materials": [
+        {
+          "name": "model",
+          "doubleSided": true,
+          "alphaMode": "OPAQUE"
+        }
+      ],
+      "postprocessing": [
+        "Isolated background Blender",
+        "Weld coincident vertices while retaining per-loop UVs",
+        "Recalculate continuous smooth normals",
+        "Global triangle-budget decimation",
+        "1536px JPEG PBR textures",
+        "No palette recoloring",
+        "No pose, rig, gameplay or live Blender scene changes"
+      ]
+    },
+    "dreadlord": {
+      "file": "undead-dreadlord.glb",
+      "generationId": "997f3e3a-9b92-4bef-891c-a5671e26005c",
+      "displayUrl": "https://hyper3d.ai/workspace/rodin/997f3e3a-9b92-4bef-891c-a5671e26005c",
+      "inputBytes": 27373320,
+      "inputSha256": "1e23cae9f77f44bd998f4efc147f39ae40cc8e9d95136fa1c15d7ec3dd548935",
+      "fileBytes": 929268,
+      "sha256": "57a437c06c54667dfb7171cf5dbb9bcc3c1ada08caacaf6f61cd7b08c5ba9acf",
+      "triangles": 13999,
+      "vertices": 10331,
+      "meshes": 1,
+      "bounds": {
+        "min": [
+          -0.948422,
+          0.0,
+          -0.23394
+        ],
+        "max": [
+          0.949289,
+          1.32217,
+          0.237301
+        ],
+        "size": [
+          1.897711,
+          1.32217,
+          0.471241
+        ]
+      },
+      "frontAxis": "+Z",
+      "upAxis": "+Y",
+      "floorY": 0,
+      "orientationCorrectionDegrees": 0,
+      "textureMaxDimension": 1536,
+      "textures": [
+        {
+          "name": "texture_normal",
+          "mimeType": "image/jpeg",
+          "bytes": 131258
+        },
+        {
+          "name": "texture_diffuse",
+          "mimeType": "image/jpeg",
+          "bytes": 197038
+        },
+        {
+          "name": "texture_metallic-texture_roughness",
+          "mimeType": "image/jpeg",
+          "bytes": 184655
+        }
+      ],
+      "materials": [
+        {
+          "name": "model",
+          "doubleSided": true,
+          "alphaMode": "OPAQUE"
+        }
+      ],
+      "postprocessing": [
+        "Isolated background Blender",
+        "Weld coincident vertices while retaining per-loop UVs",
+        "Recalculate continuous smooth normals",
+        "Global triangle-budget decimation",
+        "1536px JPEG PBR textures",
+        "No palette recoloring",
+        "No pose, rig, gameplay or live Blender scene changes"
+      ]
+    }
+  },
+  "totalFileBytes": 4525324,
+  "totalTriangles": 45996
+}

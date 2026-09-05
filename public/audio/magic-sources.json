@@ -1,0 +1,62 @@
+[
+  {
+    "key": "holy-charge",
+    "file": "work\\audio-assets\\magic-ready\\holy-charge.ogg",
+    "original": "magical_5.ogg",
+    "author": "JaggedStone",
+    "source": "https://opengameart.org/content/magic-spell-sfx",
+    "download": "https://opengameart.org/sites/default/files/magical_5.ogg",
+    "license": "CC0-1.0",
+    "processing": "aresample=44100,atempo=2.25,atrim=duration=0.64,afade=t=out:st=0.48:d=0.16,highpass=f=100,lowpass=f=6800,afade=t=in:d=0.003,peak target -5 dBFS",
+    "bytes": 6983,
+    "sha256": "6cf3015961d458ebff2103ef965f4c9053150169e6a154f56529041045e30ad8"
+  },
+  {
+    "key": "whirl",
+    "file": "work\\audio-assets\\magic-ready\\whirl.ogg",
+    "original": "magical_4.ogg",
+    "author": "JaggedStone",
+    "source": "https://opengameart.org/content/magic-spell-sfx",
+    "download": "https://opengameart.org/sites/default/files/magical_4.ogg",
+    "license": "CC0-1.0",
+    "processing": "aresample=44100,asetrate=39690,aresample=44100,atempo=1.25,atrim=duration=1.55,afade=t=out:st=1.05:d=0.50,highpass=f=100,lowpass=f=6800,afade=t=in:d=0.003,peak target -5 dBFS",
+    "bytes": 9197,
+    "sha256": "d72145a0c2c8e4e50e41b9284f6337cc8d841a0244ba376e3412fd6c59bcefcb"
+  },
+  {
+    "key": "consecrate",
+    "file": "work\\audio-assets\\magic-ready\\consecrate.ogg",
+    "original": "magical_7_0.ogg",
+    "author": "JaggedStone",
+    "source": "https://opengameart.org/content/magic-spell-sfx",
+    "download": "https://opengameart.org/sites/default/files/magical_7_0.ogg",
+    "license": "CC0-1.0",
+    "processing": "aresample=44100,asetrate=37485,aresample=44100,afade=t=out:st=1.3:d=0.52,highpass=f=100,lowpass=f=6800,afade=t=in:d=0.003,peak target -4 dBFS",
+    "bytes": 13519,
+    "sha256": "aca5bf0a52af0a8b7d3c0f7c74985ae157a7068f9da00e6670084ab7fe21ea77"
+  },
+  {
+    "key": "chime",
+    "file": "work\\audio-assets\\magic-ready\\chime.ogg",
+    "original": "magical_1_0.ogg",
+    "author": "JaggedStone",
+    "source": "https://opengameart.org/content/magic-spell-sfx",
+    "download": "https://opengameart.org/sites/default/files/magical_1_0.ogg",
+    "license": "CC0-1.0",
+    "processing": "aresample=44100,afade=t=out:st=1.35:d=0.26,highpass=f=100,lowpass=f=6800,afade=t=in:d=0.003,peak target -5 dBFS",
+    "bytes": 10100,
+    "sha256": "256ed1a8027e46d8aea9139b6e3b595b832a3d5fa7160fffa524aa76307cc3dc"
+  },
+  {
+    "key": "victory",
+    "file": "work\\audio-assets\\magic-ready\\victory.ogg",
+    "original": "magical_3.ogg",
+    "author": "JaggedStone",
+    "source": "https://opengameart.org/content/magic-spell-sfx",
+    "download": "https://opengameart.org/sites/default/files/magical_3.ogg",
+    "license": "CC0-1.0",
+    "processing": "aresample=44100,asetrate=39690,aresample=44100,aecho=0.8:0.7:240:0.26,afade=t=out:st=1.90:d=0.40,highpass=f=100,lowpass=f=6800,afade=t=in:d=0.003,peak target -5 dBFS",
+    "bytes": 14772,
+    "sha256": "35dd06e648a3d8bf2996a2865feea7da3accb293f1b410b491b10911729c64a2"
+  }
+]
