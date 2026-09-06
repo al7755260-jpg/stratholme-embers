@@ -62,6 +62,10 @@ function makeHammer(h) {
     add(new THREE.OctahedronGeometry(.031*h),glow,0,.415,z);
   }
   const aura=new THREE.PointLight(0x86d8ff,1.2,2.1);aura.position.set(0,.42*h,0);group.add(aura);
+  // Turn the hammer head a quarter turn around its handle. Keep the grip
+  // frame unchanged so the hands and captured swing trajectory stay aligned.
+  const headAlignment=new THREE.Matrix4().makeRotationY(Math.PI/2);
+  for(const part of group.children)part.applyMatrix4(headAlignment);
   group.userData.materials=[gold,steel,leather,glow];
   return group;
 }

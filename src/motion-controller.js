@@ -172,7 +172,8 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
     if(!rightTarget||!weaponLocal)return;
     for(let pass=0;pass<5;pass++){
     let floor=Infinity;
-    for(const x of [-.19,.19])for(const y of [.318,.5025])for(const z of [-.1,.1])floor=Math.min(floor,hammer.localToWorld(new THREE.Vector3(x*h,y*h,z*h)).y);
+    // The quarter-turned head is narrow on X and long on Z.
+    for(const x of [-.1,.1])for(const y of [.318,.5025])for(const z of [-.19,.19])floor=Math.min(floor,hammer.localToWorld(new THREE.Vector3(x*h,y*h,z*h)).y);
     const ground=root.getWorldPosition(new THREE.Vector3()).y+.018;
     if(floor<ground){
      rightTarget.y+=ground-floor;
