@@ -135,7 +135,7 @@ export class Game {
     document.getElementById('loading-screen')?.remove();
   }
   get state() { return this._state; }
-  get simulationFrozen() {return !!this.mobileLayout?.blocked||this._state==='paused'||this._state==='ascension'||this.angel?.phase==='pending';}
+  get simulationFrozen() {return this._state==='paused'||this._state==='ascension'||this.angel?.phase==='pending';}
   environmentSummary() {
     const destruction=this.world.destruction,state=destruction?.state||{},byKind={};let damaged=0;
     for(const prop of state.props||[]){
@@ -265,7 +265,7 @@ export class Game {
     this.dom.modal.hidden = false; this.dom.modal.className = `modal-layer ${type === 'start' ? 'start' : ''}`;
     const btn = (id, text, primary = false) => `<button id="menu-${id}" class="menu-button ${primary ? 'primary' : 'secondary'}">${text}<span class="arrow">&gt;</span></button>`;
     let content = '';
-    if (type === 'start') content = `<div class="menu-eyebrow">LORDAERON · THE FALLEN CITY</div><div class="menu-crest">${svg('consecrate')}</div><h2 class="menu-title">斯坦索姆</h2><div class="menu-subtitle">余烬中的誓言</div><div class="menu-divider"></div><p class="menu-description">钟声已停。火焰还在燃烧。<br>尸潮永不停歇，挑战你能坚持的极限。<br>满血只能承受三次攻击，拾取血包才能回血。<br>打碎南街与东巷的圣物，唤醒 Q／E 技能。<br>击杀 ${ANGEL.killsRequired} 名亡灵，唤醒五秒无敌天使。</p>${btn('start','踏 入 旧 城',true)}${btn('settings','画 面 与 声 音')}<p class="menu-controls desktop-guide"><strong>WASD</strong> 移动　<strong>J</strong> 连击　<strong>Q / E</strong> 圣物解锁<br>右键拖动视角 · 滚轮远近 · <strong>R</strong> 归中<br><strong>SPACE</strong> 闪避</p><p class="menu-controls touch-guide">左侧摇杆移动 · 右侧按住圣锤连击<br>拖动街道转动视角 · 双指缩放<br>横屏游玩视野更宽 · 点击圣翼闪避</p><div class="menu-fineprint">无尽尸潮 · 越战越险 · 领主反复来袭<br>${this.record.persistent ? '本地最佳' : '本次最佳'} ${formatSurvivalTime(this.record.best.seconds)} · ${this.record.best.kills} 净化之魂<br>同人致敬作品 · 非官方出品</div>`;
+    if (type === 'start') content = `<div class="menu-eyebrow">LORDAERON · THE FALLEN CITY</div><div class="menu-crest">${svg('consecrate')}</div><h2 class="menu-title">斯坦索姆</h2><div class="menu-subtitle">余烬中的誓言</div><div class="menu-divider"></div><p class="menu-description">钟声已停。火焰还在燃烧。<br>尸潮永不停歇，挑战你能坚持的极限。<br>满血只能承受三次攻击，拾取血包才能回血。<br>打碎南街与东巷的圣物，唤醒 Q／E 技能。<br>击杀 ${ANGEL.killsRequired} 名亡灵，唤醒五秒无敌天使。</p>${btn('start','踏 入 旧 城',true)}${btn('settings','画 面 与 声 音')}<p class="menu-controls desktop-guide"><strong>WASD</strong> 移动　<strong>J</strong> 连击　<strong>Q / E</strong> 圣物解锁<br>右键拖动视角 · 滚轮远近 · <strong>R</strong> 归中<br><strong>SPACE</strong> 闪避</p><p class="menu-controls touch-guide">左侧摇杆移动 · 右侧按住圣锤连击<br>拖动街道转动视角 · 双指缩放<br>竖屏直接游玩 · 点击圣翼闪避</p><div class="menu-fineprint">无尽尸潮 · 越战越险 · 领主反复来袭<br>${this.record.persistent ? '本地最佳' : '本次最佳'} ${formatSurvivalTime(this.record.best.seconds)} · ${this.record.best.kills} 净化之魂<br>同人致敬作品 · 非官方出品</div>`;
     if (type === 'pause') content = `<div class="menu-crest">${svg('consecrate')}</div><div class="menu-eyebrow">THE LIGHT WILL WAIT</div><h2 class="menu-title">誓言未歇</h2><p class="menu-description">旧城的时间，暂时停在此刻。</p><div class="menu-quick-actions"><button id="menu-fullscreen">全屏</button><button id="menu-sound">声音</button></div>${btn('resume','继 续 征 战',true)}${btn('settings','画 面 与 声 音')}${btn('restart','重 新 开 始')}${btn('home','返 回 主 菜 单')}`;
     if (type === 'settings') content = `<div class="menu-eyebrow">SETTINGS</div><h2 class="menu-title">画面与声音</h2>
       <label class="setting-row">总音量<input aria-label="总音量" id="volume-setting" type="range" min="0" max="100" value="${Math.round(this.audio.volume * 100)}"></label>
@@ -329,7 +329,6 @@ export class Game {
   setupInput() {
     this.touchControls = new TouchControls(this, CAMERA);
     this.onKeyDown = e => {
-      if(this.mobileLayout?.blocked)return;
       if (e.target?.matches?.('input, select, textarea') && e.key !== 'Escape') return;
       const key = e.code === 'Space' ? 'space' : e.key.toLowerCase();
       if (key === 'f' && !e.repeat && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); this.toggleFullscreen(); return; }
@@ -384,9 +383,9 @@ export class Game {
     this.resetCamera(true);
     this.dom.boss.hidden = true; this.dom.help.style.opacity = '1'; this.dom.toast.classList.remove('visible'); this.updateHUD();
   }
-  start() { if(this.mobileLayout?.blocked)return;this.reset(); this._state = 'playing'; this.dom.modal.hidden = true; this.audio.setMode('playing'); this.audio.start(); this.announce('无尽生存 · 尸潮永不停歇','打碎金色圣物解锁技能 · 靠近红色血包回血',4.2); this.renderer.domElement.focus(); this.updateHUD(); }
+  start() { this.reset(); this._state = 'playing'; this.dom.modal.hidden = true; this.audio.setMode('playing'); this.audio.start(); this.announce('无尽生存 · 尸潮永不停歇','打碎金色圣物解锁技能 · 靠近红色血包回血',4.2); this.renderer.domElement.focus(); this.updateHUD(); }
   pause() { if(this._state==='paused')return;this.pauseReturn=this._state;this.saveRecord(); this._state = 'paused'; this.environmentalAudio?.stop(); this.audio.setMode('paused'); this.keys.clear();this.touchControls?.reset(); this.inputAttack = false; this.drag = false; this.updateHUD(); this.showMenu('pause'); }
-  resume() { if(this.mobileLayout?.blocked)return;this._state=this.pauseReturn==='ascension'?'ascension':'playing';this.audio.setMode(this._state==='ascension'?'ascension':'playing'); this.dom.modal.hidden = true; this.renderer.domElement.focus(); this.audio.start(); }
+  resume() { this._state=this.pauseReturn==='ascension'?'ascension':'playing';this.audio.setMode(this._state==='ascension'?'ascension':'playing'); this.dom.modal.hidden = true; this.renderer.domElement.focus(); this.audio.start(); }
   togglePause() { if (['playing','ascension'].includes(this._state)) this.pause(); else if (this._state === 'paused') this.resume(); }
   async toggleFullscreen() {
     try {
@@ -402,7 +401,7 @@ export class Game {
       }
     } catch (_) {
       const notice = this.ui.querySelector('.system-notice');
-      notice.textContent = this.ui.classList.contains('touch-ui') ? '当前浏览器不支持网页全屏，横屏也可以游玩。' : '当前浏览器限制了网页全屏，请按 F11 使用浏览器全屏。';
+      notice.textContent = this.ui.classList.contains('touch-ui') ? '当前浏览器不支持网页全屏，竖屏可以直接游玩。' : '当前浏览器限制了网页全屏，请按 F11 使用浏览器全屏。';
       notice.classList.add('visible');
       clearTimeout(this.noticeTimeout);
       this.noticeTimeout = setTimeout(() => notice.classList.remove('visible'), 5500);
@@ -922,7 +921,7 @@ export class Game {
   update(dt,elapsed) {
     const now=performance.now(),wallDt=(now-this.lastFrameTime)/1000;this.lastFrameTime=now;
     dt=Math.min(dt,.05);this.elapsed=elapsed;this.fps=THREE.MathUtils.lerp(this.fps,1/Math.max(.001,wallDt),.035);
-    if(this._state==='paused'||this.mobileLayout?.blocked)return;
+    if(this._state==='paused')return;
     if(this.angel?.phase==='pending')this.beginAngelDescent();
     if(this._state==='ascension'){this.updateAngelCinematic(dt);return;}
     const playing=this._state==='playing';

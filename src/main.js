@@ -11,7 +11,6 @@ import './style.css';
 import './touch-controls.css';
 import './combat-polish.css';
 import { prefersTouchControls } from './touch-controls.js';
-import { MobileLandscape } from './mobile-landscape.js';
 
 const app = document.querySelector('#app');
 const boot = document.createElement('div');
@@ -47,7 +46,6 @@ async function init(){
  const game = new Game({scene,camera,renderer,world,actors,holyAssets,quality,onQuality(value){
    quality=value;resize();
  }});
- game.mobileLayout=new MobileLandscape(game,app);game.mobileLayout.sync();
  window.__renderer=renderer; window.__world=world;
 
  boot.remove();

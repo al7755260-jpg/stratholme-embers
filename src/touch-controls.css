@@ -60,15 +60,3 @@ html,body{overscroll-behavior:none}
  .touch-ui .start .menu-title{font-size:28px;letter-spacing:4px}.touch-ui .menu-subtitle{font-size:18px;margin:6px 0 8px}.touch-ui .menu-description{font-size:12px;line-height:1.5;margin:8px 0}.touch-ui .menu-button{padding:10px 12px;margin-top:7px;min-height:44px}.touch-ui .start .menu-button{max-width:none}
  .touch-ui .start .menu-controls,.touch-ui .menu-fineprint{font-size:12px;line-height:1.5;margin-top:9px}.touch-ui .setting-row{padding:10px 0}
 }
-.orientation-screen{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:calc(28px + env(safe-area-inset-top,0px)) calc(24px + env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) calc(24px + env(safe-area-inset-left,0px));background:radial-gradient(ellipse at 50% 42%,#293d3e,#101d28 75%);color:#e5d7ac;text-align:center;touch-action:none}
-.orientation-screen[hidden]{display:none}
-.orientation-card{max-width:320px;width:100%;padding:34px 12px;border-top:1px solid #ae9662;border-bottom:1px solid #ae966255}
-.orientation-emblem{height:104px;position:relative;display:grid;place-items:center;margin-bottom:22px;color:#d5bd7f}
-.orientation-phone{display:block;width:98px;height:56px;border:3px solid #d5bd7f;box-shadow:inset 0 0 0 5px #17272e;position:relative;background:#47615644}
-.orientation-phone:before{content:'+';position:absolute;left:9px;top:9px;font-size:24px;line-height:28px;color:#acb996}
-.orientation-phone:after{content:'';position:absolute;right:10px;top:17px;width:9px;height:9px;background:#d5bd7f;box-shadow:-11px 9px #a7b28a}
-.orientation-arrow{position:absolute;top:0;right:calc(50% - 72px);font:32px/1 system-ui;color:#b8caaf}
-.orientation-eyebrow{font-size:12px;line-height:1.8;color:#a9b69c;margin:0 0 15px}
-#orientation-title{font-size:26px;font-weight:400;letter-spacing:2px;line-height:1.5;margin:0 0 15px}
-.orientation-message{font-size:14px;line-height:1.8;margin:0;color:#d4d5b5}
-.orientation-controls{font-size:12px;line-height:1.8;margin:22px 0 0;color:#a3b29c}
