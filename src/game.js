@@ -135,7 +135,7 @@ export class Game {
     document.getElementById('loading-screen')?.remove();
   }
   get state() { return this._state; }
-  get simulationFrozen() {return this._state==='paused'||this._state==='ascension'||this.angel?.phase==='pending';}
+  get simulationFrozen() {return !!this.mobileLayout?.blocked||this._state==='paused'||this._state==='ascension'||this.angel?.phase==='pending';}
   environmentSummary() {
     const destruction=this.world.destruction,state=destruction?.state||{},byKind={};let damaged=0;
     for(const prop of state.props||[]){
@@ -180,8 +180,7 @@ export class Game {
   }
   flushEnvironmentEvents() {
     if(this._state!=='playing'||!this.world.destruction)return;
-    const events=this.world.destruction.drainEvents();let visuals=0,labels=0,explosionLabels=0;
-    const explosiveBatch=events.some(event=>event.type==='explode');
+    const events=this.world.destruction.drainEvents();let visuals=0,explosionLabels=0;
     this._environmentEvents??={impacts:0,broken:0,explosions:0,explosionEnemyHits:0};
     for(const event of events){
       const position=event.position;if(!position)continue;
@@ -205,7 +204,6 @@ export class Game {
         this._environmentEvents.broken++;
         if(event.ability)this.unlockSkill(event.ability,event.position);
         if(visuals++<8){this.burst(position.clone().add(new THREE.Vector3(0,.4,0)),stone?0xa5ac99:0xb08a5e,10,2.2);this.makeRing(position,.85,.28,stone?0xadb49c:0xc69a62,true);}
-        if(!explosiveBatch&&labels++<2)this.floating(position,'碎裂','',.8);
       }else if(event.type==='impact'){
         this._environmentEvents.impacts++;
         if(visuals++<8)this.burst(position.clone().add(new THREE.Vector3(0,.5,0)),stone?0xa5ac99:0xc39a68,4,1.1);
@@ -274,8 +272,8 @@ export class Game {
       <label class="setting-row">打击与环境音效<input aria-label="音效音量" id="effects-setting" type="range" min="0" max="100" value="${Math.round(this.audio.effectsVolume * 100)}"></label>
       <label class="setting-row">背景音乐<input aria-label="配乐音量" id="music-volume-setting" type="range" min="0" max="100" value="${Math.round(this.audio.musicVolume * 100)}"></label>
       <label class="setting-row">配乐选择<select aria-label="配乐选择" id="music-setting">${AUDIO_ASSETS.music.map(track=>`<option value="${track.id}" ${this.audio.status.track===track.id?'selected':''}>${track.title}</option>`).join('')}</select></label>
-      <label class="setting-row">画面品质<select aria-label="画面品质" id="quality-setting"><option value="high" ${this.quality !== 'low' ? 'selected' : ''}>精致 · 像素细节</option><option value="low" ${this.quality === 'low' ? 'selected' : ''}>流畅 · 轻量像素</option></select></label>
-      <p class="settings-note">重击时配乐会轻轻退后，让圣锤的声音更清楚。<br>音量与配乐选择会自动保存。<br>流畅画质使用更粗的像素与简化环境特效。</p>${btn('back','返 回',true)}`;
+      <label class="setting-row">画面品质<select aria-label="画面品质" id="quality-setting"><option value="high" ${this.quality !== 'low' ? 'selected' : ''}>精致 · CG 像素</option><option value="low" ${this.quality === 'low' ? 'selected' : ''}>流畅 · 轻量像素</option></select></label>
+      <p class="settings-note">重击时配乐会轻轻退后，让圣锤的声音更清楚。<br>音量与配乐选择会自动保存。<br>精致画质保留更细的像素、柔和阴影和金属受光；手机默认使用轻量画质。</p>${btn('back','返 回',true)}`;
     if (type === 'dead') {
       const newBest = Math.floor(this.gameTime) > this.record.baseline;
       content = `<div class="menu-crest">${svg('hammer')}</div><div class="menu-eyebrow">${newBest ? 'A NEW SURVIVAL RECORD' : 'A FALLEN OATH'}</div><h2 class="menu-title">${newBest ? '新的生存纪录' : '誓言未尽'}</h2><p class="menu-description">你的圣锤沉入灰烬。<br>尸潮没有尽头，下一次能否坚持更久？</p><div class="result-grid"><div class="result-stat"><strong>${formatSurvivalTime(this.gameTime)}</strong><span>本局存活</span></div><div class="result-stat"><strong>${this.kills}</strong><span>净化之魂</span></div><div class="result-stat"><strong>${this.threatStage}</strong><span>尸潮等级</span></div></div><p class="result-best">${this.record.persistent ? '本地最佳' : '本次最佳'} ${formatSurvivalTime(this.record.best.seconds)} · ${this.record.best.kills} 净化之魂<br>本局最高连斩 ${this.maxCombo}</p>${btn('restart','再 战 一 次',true)}${btn('home','返 回 主 菜 单')}`;
@@ -331,6 +329,7 @@ export class Game {
   setupInput() {
     this.touchControls = new TouchControls(this, CAMERA);
     this.onKeyDown = e => {
+      if(this.mobileLayout?.blocked)return;
       if (e.target?.matches?.('input, select, textarea') && e.key !== 'Escape') return;
       const key = e.code === 'Space' ? 'space' : e.key.toLowerCase();
       if (key === 'f' && !e.repeat && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); this.toggleFullscreen(); return; }
@@ -385,9 +384,9 @@ export class Game {
     this.resetCamera(true);
     this.dom.boss.hidden = true; this.dom.help.style.opacity = '1'; this.dom.toast.classList.remove('visible'); this.updateHUD();
   }
-  start() { this.reset(); this._state = 'playing'; this.dom.modal.hidden = true; this.audio.setMode('playing'); this.audio.start(); this.announce('无尽生存 · 尸潮永不停歇','打碎金色圣物解锁技能 · 靠近红色血包回血',4.2); this.renderer.domElement.focus(); this.updateHUD(); }
+  start() { if(this.mobileLayout?.blocked)return;this.reset(); this._state = 'playing'; this.dom.modal.hidden = true; this.audio.setMode('playing'); this.audio.start(); this.announce('无尽生存 · 尸潮永不停歇','打碎金色圣物解锁技能 · 靠近红色血包回血',4.2); this.renderer.domElement.focus(); this.updateHUD(); }
   pause() { if(this._state==='paused')return;this.pauseReturn=this._state;this.saveRecord(); this._state = 'paused'; this.environmentalAudio?.stop(); this.audio.setMode('paused'); this.keys.clear();this.touchControls?.reset(); this.inputAttack = false; this.drag = false; this.updateHUD(); this.showMenu('pause'); }
-  resume() { this._state=this.pauseReturn==='ascension'?'ascension':'playing';this.audio.setMode(this._state==='ascension'?'ascension':'playing'); this.dom.modal.hidden = true; this.renderer.domElement.focus(); this.audio.start(); }
+  resume() { if(this.mobileLayout?.blocked)return;this._state=this.pauseReturn==='ascension'?'ascension':'playing';this.audio.setMode(this._state==='ascension'?'ascension':'playing'); this.dom.modal.hidden = true; this.renderer.domElement.focus(); this.audio.start(); }
   togglePause() { if (['playing','ascension'].includes(this._state)) this.pause(); else if (this._state === 'paused') this.resume(); }
   async toggleFullscreen() {
     try {
@@ -409,7 +408,14 @@ export class Game {
       this.noticeTimeout = setTimeout(() => notice.classList.remove('visible'), 5500);
     }
   }
-  announce(title, sub, duration = 3) { this.dom.toastTitle.textContent = title; this.dom.toastSub.textContent = sub; this.dom.toast.classList.add('visible'); this.toastTimer = duration; }
+  announce(title, sub, duration = 3, kind = 'general') {
+    const skill = kind === 'skill';
+    const host = skill ? this.ui.querySelector('.objective') : this.ui;
+    if (this.dom.toast.parentElement !== host) host.append(this.dom.toast);
+    this.dom.toast.classList.toggle('skill-unlock', skill);
+    this.dom.toastTitle.textContent = title; this.dom.toastSub.textContent = sub;
+    this.dom.toast.classList.add('visible'); this.toastTimer = duration;
+  }
   clearPath(a, b, radius = .5) {
     const count = Math.max(1, Math.ceil(a.distanceTo(b) / 1.1));
     for (let i = 1; i <= count; i++) {
@@ -526,7 +532,7 @@ export class Game {
     if(!['q','e'].includes(id)||this.unlocked?.[id]||this._state!=='playing')return false;
     this.unlocked??={q:false,e:false};this.unlocked[id]=true;this.cooldowns[id]=0;
     const relic=RELICS.find(r=>r.ability===id);this.audio.play('chime',.95);this.burst(position.clone().setY(1.6),0xffdf86,50,4);
-    this.announce(`${relic.skill}已获得`,`${id.toUpperCase()} 释放 · 圣物的力量已苏醒`,3.5);this.updateHUD();return true;
+    this.announce(`${relic.skill}已获得`,`${id.toUpperCase()} 释放 · 圣物的力量已苏醒`,3.5,'skill');this.updateHUD();return true;
   }
   updateSupplies(dt){
     if(this._state!=='playing'||!this.supplies)return;
@@ -916,7 +922,7 @@ export class Game {
   update(dt,elapsed) {
     const now=performance.now(),wallDt=(now-this.lastFrameTime)/1000;this.lastFrameTime=now;
     dt=Math.min(dt,.05);this.elapsed=elapsed;this.fps=THREE.MathUtils.lerp(this.fps,1/Math.max(.001,wallDt),.035);
-    if(this._state==='paused')return;
+    if(this._state==='paused'||this.mobileLayout?.blocked)return;
     if(this.angel?.phase==='pending')this.beginAngelDescent();
     if(this._state==='ascension'){this.updateAngelCinematic(dt);return;}
     const playing=this._state==='playing';

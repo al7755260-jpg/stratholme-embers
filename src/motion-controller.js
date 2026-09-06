@@ -52,7 +52,7 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
  const variant=Math.random()>.5?1:0,phaseOffset=Math.random()*TAU;
  let gaitPhase=phaseOffset,locomotion=0,lastKey='',blendAge=1,previousDead=0;
  let fromRotations=bones.map(b=>b.quaternion.clone());
- let fromRightTarget=null,fromWeaponRotation=null;
+ let fromRightTarget=null,fromRightPole=null,fromWeaponRotation=null,fromRightPalmRotation=null,carryPalmFrame=null;
  const euler=new THREE.Euler(),quaternion=new THREE.Quaternion();
  const gaitProfiles={zombie:{speed:1.8,stride:.78,lift:.073},forsaken:{speed:2,stride:.86,lift:.08},abomination:{speed:1.2,stride:.64,lift:.055},dreadlord:{speed:1.55,stride:.76,lift:.065}};
  const gait=gaitProfiles[kind]||gaitProfiles.zombie;
@@ -60,7 +60,7 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
  const cycleDistance=h*(kind==='arthas'?1.08:gait.stride);
  const toWorld=v=>root.localToWorld(new THREE.Vector3(...v).multiplyScalar(h));
  function update(dt,state={}){
-  let footError=0,gripError=0;
+  let footError=0,gripError=0,stanceDrop=0;
   dt=Math.max(0,Math.min(dt,.1));
   const dead=clamp(state.dead||0,0,1),speed=Math.max(0,Math.abs(state.speed||0));
   if(state.reset||(previousDead>0&&dead===0)){locomotion=0;gaitPhase=phaseOffset;lastKey='';}
@@ -78,8 +78,10 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
    if(lastKey&&kind==='arthas'&&hammer){
     root.updateWorldMatrix(true,true);
     fromRightTarget=root.worldToLocal(rig.rightHand.getWorldPosition(new THREE.Vector3())).divideScalar(h);
+    fromRightPole=root.worldToLocal(rig.rightForearm.getWorldPosition(new THREE.Vector3())).divideScalar(h);
     fromWeaponRotation=root.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(hammer.getWorldQuaternion(new THREE.Quaternion()));
-   }else {fromRightTarget=null;fromWeaponRotation=null;}
+    fromRightPalmRotation=root.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(rig.rightHand.getWorldQuaternion(new THREE.Quaternion()));
+   }else {fromRightTarget=null;fromRightPole=null;fromWeaponRotation=null;fromRightPalmRotation=null;}
    fromRotations=bones.map(b=>b.quaternion.clone());blendAge=0;lastKey=key;
   }
   blendAge+=dt;const blend=state.immediate?1:smooth(blendAge/(dead>0?.08:.075));
@@ -124,7 +126,8 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
     drop=Math.max(drop,hip.y-target.y-Math.sqrt(Math.max(.01,length*length-horizontal)));
    }
    const rootScale=root.getWorldScale(new THREE.Vector3()).y;
-   rig.hips.position.y-=clamp(drop/rootScale,0,h*.18);root.updateWorldMatrix(true,true);
+   stanceDrop=clamp(drop/rootScale,0,h*.18);
+   rig.hips.position.y-=stanceDrop;root.updateWorldMatrix(true,true);
    for(const {side,target,pole,footPitch} of feet){
     solveLimb(rig[side+'Thigh'],rig[side+'Shin'],rig[side+'Foot'],target,pole);
     const groundOrientation=root.getWorldQuaternion(new THREE.Quaternion());
@@ -145,16 +148,32 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
    let rightTarget,rightPole,weaponLocal;
    if(sampled.rightHandTarget){
     const localTarget=new THREE.Vector3(...sampled.rightHandTarget);
+    // The loaded hand follows the lowered running stance. A fixed world-height
+    // target would leave the fist up by the shoulder on a long stride.
+    if(action==='idle')localTarget.y-=stanceDrop/h*.75;
     if(fromRightTarget&&blend<1)localTarget.lerpVectors(fromRightTarget,localTarget,blend);
     rightTarget=toWorld(localTarget.toArray());
     // Arm poles turn with the torso during Q. A fixed world pole makes elbows
     // reverse halfway through a full spin.
-    rightPole=rig.rightArm.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(.13+.17*grip,-.13-.04*grip,-.125+.04*grip).multiplyScalar(h).applyQuaternion(elbowFrame));
+    const poleOffset=action==='idle'?new THREE.Vector3(.09,-.20,-.125):new THREE.Vector3(.13+.17*grip,-.13-.04*grip,-.125+.04*grip);
+    rightPole=rig.rightArm.getWorldPosition(new THREE.Vector3()).add(poleOffset.multiplyScalar(h).applyQuaternion(elbowFrame));
     if(sampled.rightElbowTarget)rightPole.lerp(toWorld(sampled.rightElbowTarget),sampled.mocapWeight||0);
+    if(fromRightPole&&blend<1)rightPole.lerpVectors(toWorld(fromRightPole.toArray()),rightPole,blend);
     solveLimb(rig.rightArm,rig.rightForearm,rig.rightHand,rightTarget,rightPole,1,armRoll);
    }
    function placeHammer(){
     root.updateWorldMatrix(true,true);
+    if(action==='idle'&&weaponLocal){
+     // Calibrate against this model's relaxed fist once. Keep the palm aligned
+     // with its handle while the walking IK raises/lowers the shoulder; allowing
+     // the forearm's bend plane to dictate grip roll made the wrist flip.
+     const rootRotation=root.getWorldQuaternion(new THREE.Quaternion());
+     if(!carryPalmFrame)carryPalmFrame=weaponLocal.clone().invert().multiply(rootRotation.clone().invert()).multiply(rig.rightHand.getWorldQuaternion(new THREE.Quaternion()));
+     const palmLocal=weaponLocal.clone().multiply(carryPalmFrame);
+     if(fromRightPalmRotation&&blend<1)palmLocal.copy(fromRightPalmRotation.clone().slerp(palmLocal,blend));
+     const wristRotation=rig.rightHand.parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(rootRotation).multiply(palmLocal);
+     rig.rightHand.quaternion.copy(wristRotation);rig.rightHand.updateWorldMatrix(false,true);
+    }
     const desired=root.getWorldQuaternion(new THREE.Quaternion()).multiply(weaponLocal);
     desired.premultiply(rig.rightHand.getWorldQuaternion(new THREE.Quaternion()).invert());
     hammer.quaternion.copy(desired);
@@ -164,7 +183,11 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
     hammer.updateWorldMatrix(false,true);
    }
    if(sampled.weaponRotation){
-    weaponLocal=new THREE.Quaternion().setFromEuler(new THREE.Euler(...sampled.weaponRotation));
+    const weaponEuler=new THREE.Euler(...sampled.weaponRotation);
+    // Let the heavy head trail a little farther back as the knees compress,
+    // preserving ground clearance with the original full-size hammer.
+    if(action==='idle')weaponEuler.x+=stanceDrop/h*2.7;
+    weaponLocal=new THREE.Quaternion().setFromEuler(weaponEuler);
     if(fromWeaponRotation&&blend<1)weaponLocal.copy(fromWeaponRotation.clone().slerp(weaponLocal,blend));
     placeHammer();
    }

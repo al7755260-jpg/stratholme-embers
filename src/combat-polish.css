@@ -17,6 +17,11 @@
 #game-ui .relic-objective:before{content:'圣物';color:#abbba3}
 #game-ui .relic-objective span{padding:0;background:none;border:0}
 #game-ui .relic-objective b{margin-right:3px}
+/* Skill rewards belong to the corner HUD, outside the character's combat space. */
+#game-ui .toast.skill-unlock{display:none;position:static;inset:auto;transform:none;width:auto;min-width:0;max-width:100%;margin:7px 0 0;padding:7px 0 1px;text-align:left;background:none;border:0;border-top:1px solid #b8a97866;box-shadow:none;pointer-events:none}
+#game-ui .toast.skill-unlock.visible{display:block;transform:none}
+#game-ui .toast.skill-unlock .toast-title{font-size:14px;line-height:1.4;letter-spacing:0;color:#ffe2a0}
+#game-ui .toast.skill-unlock .toast-sub{margin-top:3px;font-size:12px;line-height:1.4;letter-spacing:0;color:#c3cbb0;overflow-wrap:anywhere}
 #game-ui .map-frame{width:80px;height:80px;top:calc(14px + env(safe-area-inset-top,0px));right:calc(14px + env(safe-area-inset-right,0px));border-width:1px;box-shadow:none}
 #game-ui .map-label{display:none}
 #game-ui .utility{top:calc(14px + env(safe-area-inset-top,0px));right:calc(105px + env(safe-area-inset-right,0px));display:flex;gap:0}
@@ -80,3 +85,10 @@
  #game-ui .utility{top:calc(10px + env(safe-area-inset-top,0px));right:calc(86px + env(safe-area-inset-right,0px))}
 }
 @media(prefers-reduced-motion:reduce){.objective-detail.level-up{animation:none}}
+@media(orientation:landscape) and (max-height:600px){
+ #game-ui.touch-ui .objective{top:calc(10px + env(safe-area-inset-top,0px));left:calc(12px + env(safe-area-inset-left,0px));padding:5px 8px;max-width:min(280px,calc(100% - 120px))}
+ #game-ui.touch-ui .map-frame{top:calc(10px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));width:62px;height:62px}
+ #game-ui.touch-ui .utility{top:calc(10px + env(safe-area-inset-top,0px));right:calc(86px + env(safe-area-inset-right,0px))}
+ #game-ui.touch-ui .touch-controls{left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+ #game-ui.touch-ui .health-panel{left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(136px + env(safe-area-inset-bottom,0px))}
+}

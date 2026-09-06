@@ -19,7 +19,8 @@ const quadVertex = 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectio
 export class CaptureSceneDepth extends Pass {
  constructor(camera){
   super();this.needsSwap=false;
-  this.target=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter,depthBuffer:false});
+  // Full precision avoids false normals on distant, nearly flat cobblestones.
+  this.target=new THREE.WebGLRenderTarget(1,1,{format:THREE.RedFormat,type:THREE.FloatType,minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter,depthBuffer:false});
   this.material=new THREE.ShaderMaterial({depthTest:false,depthWrite:false,toneMapped:false,uniforms:{tDepth:{value:null},near:{value:camera.near},far:{value:camera.far}},vertexShader:quadVertex,fragmentShader:`
    #include <packing>
    uniform sampler2D tDepth; uniform float near; uniform float far; varying vec2 vUv;
@@ -32,14 +33,20 @@ export class CaptureSceneDepth extends Pass {
 }
 
 export function createIllustratedPixelPass(depth){
- const pass=new ShaderPass({name:'IllustratedPixelPalette',uniforms:{tDiffuse:{value:null},tSceneDepth:{value:null},resolution:{value:new THREE.Vector2(480,300)},palette:{value:PALETTE},ditherStrength:{value:.26}},vertexShader:quadVertex,fragmentShader:`
+ const pass=new ShaderPass({name:'IllustratedPixelPalette',uniforms:{tDiffuse:{value:null},tSceneDepth:{value:null},resolution:{value:new THREE.Vector2(480,300)},resolveDetail:{value:0},palette:{value:PALETTE},ditherStrength:{value:.26}},vertexShader:quadVertex,fragmentShader:`
   uniform sampler2D tDiffuse; uniform sampler2D tSceneDepth; uniform vec2 resolution;
-  uniform vec3 palette[40]; uniform float ditherStrength; varying vec2 vUv;
+  uniform vec3 palette[40]; uniform float ditherStrength,resolveDetail; varying vec2 vUv;
   float b2(vec2 p){vec2 q=mod(p,2.);return 2.*q.x+3.*q.y-4.*q.x*q.y;}
   float b4(vec2 p){p=mod(p,4.);return (4.*b2(p)+b2(floor(p/2.))+.5)/16.;}
   void main(){
    vec2 cell=floor(vUv*resolution),uv=(cell+.5)/resolution,one=1./resolution;
    vec3 color=texture2D(tDiffuse,uv).rgb;
+   // Resolve subpixel lighting before committing it to the fixed pixel grid.
+   if(resolveDetail>.5){
+    vec2 d=one*.25;
+    color=(texture2D(tDiffuse,uv+d).rgb+texture2D(tDiffuse,uv-d).rgb+
+           texture2D(tDiffuse,uv+vec2(d.x,-d.y)).rgb+texture2D(tDiffuse,uv+vec2(-d.x,d.y)).rgb)*.25;
+   }
    float luma=dot(color,vec3(.299,.587,.114));
    color=mix(color,vec3(luma),.045);
    // A gentle toe keeps texture contrast inside shadowed walls and cobbles.
@@ -50,7 +57,7 @@ export function createIllustratedPixelPass(depth){
    float d2=texture2D(tSceneDepth,uv+vec2(0,one.y)).r;
    float edge=step(max(.0022,z*.055),max(d1-z,d2-z));
    // Single-pixel contour ink is confined to depth breaks, rather than noisy texture edges.
-   color=mix(color,color*.78,edge*.60);
+   color=mix(color,color*.78,edge*.35);
    float nearest=100.,second=100.;vec3 a=palette[0],b=palette[1];
    for(int i=0;i<40;i++){
     vec3 difference=color-palette[i];float dist=dot(difference*difference,vec3(.27,.54,.19));
@@ -80,7 +87,7 @@ export function pixelTexture(texture,maxSize=512){
  canvas.width=Math.max(1,Math.round(w*factor));canvas.height=Math.max(1,Math.round(h*factor));
  const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(source,0,0,canvas.width,canvas.height);
  const result=texture.clone();result.source=new THREE.Source(canvas);result.mipmaps=[];result.generateMipmaps=true;
- result.magFilter=THREE.NearestFilter;result.minFilter=THREE.NearestMipmapLinearFilter;result.anisotropy=1;result.needsUpdate=true;
+ result.magFilter=THREE.NearestFilter;result.minFilter=THREE.NearestMipmapLinearFilter;result.anisotropy=2;result.needsUpdate=true;
  textureCache.set(texture,result);textureCache.set(result,result);return result;
 }
 
@@ -97,8 +104,16 @@ export function paintPixelMaterials(root){
     if(material.normalMap)material.normalMap=pixelTexture(material.normalMap,512);
     if(material.bumpMap){material.bumpMap=pixelTexture(material.bumpMap,512);material.bumpScale=Math.min(material.bumpScale,.075);}
     material.roughnessMap=null;material.metalnessMap=null;
-    const wet=material.userData.pixelSurface==='wet';
-    material.roughness=wet?.30:.86;material.metalness=wet?.28:Math.min(material.metalness,.18);material.envMapIntensity=wet?.5:.35;
+    const surface=material.userData.pixelSurface;
+    if(surface==='wet'){
+     material.roughness=.28;material.metalness=.28;material.envMapIntensity=.65;
+    }else if(surface==='hero'){
+     material.roughness=.61;material.metalness=.30;material.envMapIntensity=.8;
+    }else if(surface==='weapon'){
+     material.roughness=Math.max(.32,material.roughness);material.metalness=Math.min(.72,material.metalness);material.envMapIntensity=.9;
+    }else{
+     material.roughness=Math.max(.78,material.roughness);material.metalness=Math.min(material.metalness,.18);material.envMapIntensity=.35;
+    }
    }
    material.needsUpdate=true;styled.add(material);
   }
@@ -107,7 +122,7 @@ export function paintPixelMaterials(root){
 
 export function pixelViewport(w,h,quality='high'){
  const low=quality==='low'||quality==='performance';
- const scale=low?Math.max(2,Math.round(h/240)):Math.max(2,Math.ceil(h/540));
+ const scale=low?Math.max(2,Math.round(h/240)):Math.max(1,w/960,h/540);
  return {w:Math.max(1,Math.round(w/scale)),h:Math.max(1,Math.round(h/scale)),scale};
 }
 

@@ -19,6 +19,7 @@ function prepare(gltf,kind) {
     skinGeometry(geometry,kind,desc,source.material.map);
     const material=source.material.clone();
     if(kind==='arthas'){
+      material.userData.pixelSurface='hero';
       material.side=THREE.FrontSide;
       material.roughness=.63;
       material.metalness=.65;
@@ -48,6 +49,7 @@ function makeHammer(h) {
   const steel=new THREE.MeshStandardMaterial({color:0xb7cbd2,metalness:.85,roughness:.23});
   const leather=new THREE.MeshStandardMaterial({color:0x1b2936,roughness:.9});
   const glow=new THREE.MeshStandardMaterial({color:0xd7f7ff,emissive:0x78cfff,emissiveIntensity:2.5,metalness:.2,roughness:.35});
+  for(const material of [gold,steel,leather,glow])material.userData.pixelSurface='weapon';
   const add=(geo,mat,x,y,z)=>{const m=new THREE.Mesh(geo,mat);m.position.set(x*h,y*h,z*h);m.castShadow=true;group.add(m);return m;};
   add(new THREE.CylinderGeometry(.016*h,.022*h,.44*h,10),leather,0,.15,0);
   for(let i=0;i<8;i++)add(new THREE.TorusGeometry(.020*h,.004*h,4,12),gold,0,-.02+i*.035,0).rotation.x=Math.PI/2;

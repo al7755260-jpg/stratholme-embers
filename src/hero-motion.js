@@ -186,8 +186,11 @@ function layer(base, actionPose, locomotion, weight) {
 
 // Authored wrist paths are normalized by actor height. The controller fits
 // the shared handle to both arm reaches, independently of the support latch.
-const CARRY_HAND = [.235,.535,.065];
-const CARRY_WEAPON = [3.05,0,-.16];
+// Approved carry: fist beside the rear of the hip, head trailing behind the
+// outer calf. The existing head is already quarter-turned in actors.js; keep
+// that model alignment and pitch the shaft back instead of rolling it again.
+const CARRY_HAND = [.25,.56,-.025];
+const CARRY_WEAPON = [Math.PI+.56,0,-.10];
 const HAND_PATHS = {
   ascend:[[0,...CARRY_HAND],[.22,.12,.64,.20],[.48,.12,.96,.05],[.72,.16,.93,.07],[1,.17,.90,.09]],
   sweep: [[0,...CARRY_HAND],[.15,.075,.645,.17],[.32,.015,.75,.18],[.48,.025,.66,.19],[.60,-.035,.65,.18],[.79,.085,.62,.14],[1,...CARRY_HAND]],
@@ -265,9 +268,9 @@ export function sampleHeroMotion(s = {}) {
   const tables = s.action === 'melee' ? [SWEEP, REVERSE, OVERHEAD][clamp(Math.round(s.comboStep || 0), 0, 2)] : s.action === 'whirl' ? WHIRL : s.action === 'cast' ? CAST : s.action === 'dodge' ? DODGE : s.action === 'ascend' ? ASCEND : null;
   // Loaded arm has a small restrained pendulum; the free hand keeps its gait.
   let handTarget=[...CARRY_HAND],weaponEuler=[...CARRY_WEAPON];
-  handTarget[2]+=Math.sin(s.gaitPhase||0)*.018*walk;
+  handTarget[2]+=Math.sin(s.gaitPhase||0)*.012*walk;
   handTarget[1]+=Math.sin((s.gaitPhase||0)*2)*.004*walk;
-  weaponEuler[0]+=Math.sin((s.gaitPhase||0)-.3)*.06*walk;
+  weaponEuler[0]+=Math.sin((s.gaitPhase||0)-.3)*.045*walk;
   if (tables) {
     const a = sample(tables, p);
     // Negative right-shoulder Z / positive left-shoulder Z draw both elbows

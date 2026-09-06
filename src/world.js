@@ -32,7 +32,7 @@ export function createWorld(scene,townhouse=null){
   statue:new T.MeshStandardMaterial({color:0xbac4c8,map:stone,emissive:0x77838a,emissiveIntensity:.22,roughness:.91,side:T.DoubleSide}),
   moss:new T.MeshStandardMaterial({color:0x364846,roughness:1}),
   paper:new T.MeshStandardMaterial({color:0x8a8475,roughness:1}),
-  ground:new T.MeshStandardMaterial({color:0xc3ccd2,map:cobble,emissive:0xa5b4be,emissiveIntensity:.42,emissiveMap:cobble,bumpMap:cobble,bumpScale:.2,roughness:.54,metalness:.15}),
+  ground:new T.MeshStandardMaterial({color:0xc3ccd2,map:cobble,emissive:0xa5b4be,emissiveIntensity:.22,emissiveMap:cobble,bumpMap:cobble,bumpScale:.2,roughness:.54,metalness:.15}),
  };
  // Keep each building's material batches independent. A foreground gate must
  // never fade every stone wall merely because they share the same source paint.
@@ -192,8 +192,19 @@ export function createWorld(scene,townhouse=null){
   }
   if(!owner.boxes)owner.boxes=bounds.isEmpty()?[]:[bounds];
  }
- const hemi=new T.HemisphereLight(0xc1d3df,0x849296,2.2);scene.add(hemi);
- const moon=new T.DirectionalLight(0xc6d7e8,2.55);moon.position.set(-14,35,15);moon.castShadow=true;moon.shadow.intensity=.56;moon.shadow.mapSize.set(2048,2048);Object.assign(moon.shadow.camera,{left:-42,right:42,top:42,bottom:-42,near:1,far:100});moon.shadow.normalBias=.075;moon.shadow.bias=-.00008;scene.add(moon);
+ const hemi=new T.HemisphereLight(0xc1d3df,0x849296,1.55);scene.add(hemi);
+ const moon=new T.DirectionalLight(0xc6d7e8,3.1);moon.position.set(-14,35,15);moon.castShadow=true;moon.shadow.intensity=.92;moon.shadow.radius=2.6;moon.shadow.mapSize.set(2048,2048);Object.assign(moon.shadow.camera,{left:-25,right:25,top:25,bottom:-25,near:1,far:100});moon.shadow.normalBias=.025;moon.shadow.bias=-.00008;scene.add(moon,moon.target);
+ // Snap in the light's plane to keep soft shadows steady while the camera follows.
+ const lightDirection=new T.Vector3(-14,35,15),lightForward=lightDirection.clone().normalize();
+ const lightRight=new T.Vector3().crossVectors(new T.Vector3(0,1,0),lightForward).normalize();
+ const lightUp=new T.Vector3().crossVectors(lightForward,lightRight),lightFocus=new T.Vector3();
+ function updateLightingFocus(position){
+  const texel=50/2048;
+  lightFocus.copy(position);
+  lightFocus.addScaledVector(lightRight,Math.round(position.dot(lightRight)/texel)*texel-position.dot(lightRight));
+  lightFocus.addScaledVector(lightUp,Math.round(position.dot(lightUp)/texel)*texel-position.dot(lightUp));
+  moon.target.position.copy(lightFocus);moon.position.copy(lightFocus).add(lightDirection);
+ }
  const fireLight=new T.PointLight(0xff6b26,48,25,2);fireLight.position.set(-6,5,8);scene.add(fireLight);
  const plazaLight=new T.PointLight(0xff8b3e,52,28,2);plazaLight.position.set(13,6,-16);scene.add(plazaLight);
  const rim=new T.PointLight(0x779fcc,30,18,2);rim.position.set(0,6,23);scene.add(rim);
@@ -300,7 +311,7 @@ export function createWorld(scene,townhouse=null){
   return faded;
  }
  function getOcclusionState(){return occluders.map(owner=>({name:owner.name,fade:owner.fade,meshCount:owner.meshes.length,materialIds:owner.materials.map(saved=>saved.material.uuid),boxes:owner.boxes.map(box=>({min:box.min.toArray(),max:box.max.toArray()}))}));}
- return {root,start,destruction,districtDetails,plaza:new T.Vector3(0,0,-12),bounds:{minX:-14,maxX:32,minZ:-26,maxZ:28},spawnPoints:[new T.Vector3(-9,0,-23),new T.Vector3(9,0,-23),new T.Vector3(0,0,-21),new T.Vector3(27,0,-12),new T.Vector3(27,0,2),new T.Vector3(-3,0,-7)],resolveMovement,resolveCamera,updateOcclusion,getOcclusionState,
+ return {root,start,destruction,districtDetails,updateLightingFocus,plaza:new T.Vector3(0,0,-12),bounds:{minX:-14,maxX:32,minZ:-26,maxZ:28},spawnPoints:[new T.Vector3(-9,0,-23),new T.Vector3(9,0,-23),new T.Vector3(0,0,-21),new T.Vector3(27,0,-12),new T.Vector3(27,0,2),new T.Vector3(-3,0,-7)],resolveMovement,resolveCamera,updateOcclusion,getOcclusionState,
   update(dt,t){skyMat.uniforms.time.value=t;fireMat.uniforms.time.value=t;fireLight.intensity=46+Math.sin(t*5.5)*5+Math.sin(t*13)*2;plazaLight.intensity=50+Math.sin(t*6)*6;
    for(const m of flags){const pos=m.geometry.attributes.position;for(let i=0;i<pos.count;i++){const y=pos.getY(i);pos.setZ(i,Math.sin(y*2+t*2.3+m.position.x)*.075*(-y)+Math.sin(t*1.7)*.04);}pos.needsUpdate=true;m.geometry.computeVertexNormals();}
    for(const {s,base,phase,size} of smoke){const age=(phase+t*.035)%1;s.position.set(base.x+Math.sin(age*4+phase)*2+age*5,base.y+2+age*18,base.z+age*2);s.scale.setScalar(size*(.6+age*1.3));s.material.opacity=Math.sin(age*Math.PI)*.5;s.material.rotation=phase*10+age*.5;}
