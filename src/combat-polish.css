@@ -1,0 +1,15 @@
+/* Reserve the battlefield for combat; the level indicator stays in the HUD. */
+.objective{top:20px;min-width:0;width:332px}
+.objective-title{display:none}
+.survival-score{display:grid;grid-template-columns:82px 1fr;column-gap:8px;align-items:center;padding:7px 10px;text-align:left}
+.survival-clock{grid-row:1 / 3;margin:0;font-size:24px;letter-spacing:1px}
+.objective-detail{margin:0;font-size:12px;line-height:1.6}
+.survival-best{margin:0;font-size:12px;line-height:1.5}
+.relic-objective{margin-top:7px;gap:5px;font-size:12px}
+.objective-detail.level-up{color:#fff1b5;animation:threat-highlight .7s steps(3,end) 2}
+@keyframes threat-highlight{0%,100%{text-shadow:none}50%{color:#fff9da;text-shadow:0 0 8px #fbbd6b}}
+@media(max-width:1000px){.objective{width:300px;top:18px}}
+@media(max-width:700px){.objective{width:270px}.survival-score{grid-template-columns:70px 1fr;gap:0 5px;padding:6px}.survival-clock{font-size:22px}}
+@media(max-width:640px){.objective{top:109px;width:170px}.survival-score{display:block;padding:6px 8px}.survival-clock{font-size:20px}.objective-detail,.survival-best{font-size:12px}.relic-objective{margin-top:5px}}
+@media(max-height:500px) and (min-width:641px){.touch-ui .objective{width:280px;min-width:0}.touch-ui .survival-score{grid-template-columns:74px 1fr;padding:5px 8px}.touch-ui .survival-clock{margin:0}.touch-ui .survival-best{margin:0}}
+@media(prefers-reduced-motion:reduce){.objective-detail.level-up{animation:none}}

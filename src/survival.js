@@ -1,18 +1,20 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
-export const SURVIVAL=Object.freeze({maxHp:3,hitDamage:1,hitGrace:.9,packHeal:1,packLimit:16,packLife:45,pickupRadius:.85,pickupDelay:.4,dropChance:.30,pityKills:4});
+export const SURVIVAL=Object.freeze({maxHp:3,hitDamage:1,hitGrace:.9,packHeal:1,packLimit:16,packLife:45,pickupRadius:.85,pickupDelay:.4,dropChance:.30,criticalDropChance:.52,pityKills:4,dropRate:.10});
 export const RELICS=Object.freeze([
   Object.freeze({id:'relic-q',kind:'relic',ability:'q',name:'风暴圣物',skill:'神圣风暴',area:'旧城南街',x:-3.45,z:15.6,rotation:0}),
   Object.freeze({id:'relic-e',kind:'relic',ability:'e',name:'奉献圣物',skill:'奉献',area:'东侧巷道',x:20,z:2.7,rotation:0}),
 ]);
 
-// Long unlucky streaks cannot starve an otherwise successful run. Big enemies
-// always drop a pack; at critical health the chance rises but pickup is required.
+// First reproduce the original drop opportunities (including its pity counter),
+// then retain 10% of them. Large enemies and critical-health rolls use the same
+// thinning step: neither can bypass the requested tenfold reduction.
 export function healthDropRoll(misses,hp,large=false,random=Math.random){
   const guaranteed=large||misses+1>=SURVIVAL.pityKills;
-  const dropped=guaranteed||random()<(hp===1?.52:SURVIVAL.dropChance);
-  return {dropped,misses:dropped?0:misses+1};
+  const eligible=guaranteed||random()<(hp===1?SURVIVAL.criticalDropChance:SURVIVAL.dropChance);
+  const dropped=eligible&&random()<SURVIVAL.dropRate;
+  return {dropped,misses:eligible?0:misses+1};
 }
 
 function mergedBoxes(parts){

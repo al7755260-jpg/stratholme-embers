@@ -105,7 +105,7 @@ export class Game {
     this.audio = new AudioScene(); this.stepDistance = 0; this.stepVariant = 0; this.groanTimer = 2.5; this.shake = 0; this.inputAttack = false;
     this.environmentalAudio=new EnvironmentalAudio(this.audio);this._environmentRun=0;this._environmentSequence=0;this._environmentDamageIds=new Set();
     this._environmentEvents={impacts:0,broken:0,explosions:0,explosionEnemyHits:0};this._environmentDamageAreas=0;this._environmentLastEvent=null;
-    this.drag = false; this.elapsed = 0; this.gameTime = 0; this.kills = 0; this.threatStage = 1; this.maxCombo = 0; this.combo = 0; this.comboTimer = 0;
+    this.drag = false; this.elapsed = 0; this.gameTime = 0; this.kills = 0; this.threatStage = 1; this.threatNotice=0; this.maxCombo = 0; this.combo = 0; this.comboTimer = 0;
     this.hp = SURVIVAL.maxHp; this.maxHp = SURVIVAL.maxHp; this.unlocked={q:false,e:false}; this.invincible = 0; this.hitFlash = 0; this.cooldowns = { q: 0, e: 0, space: 0 };
     this.resetActions(true); this._combatTime = 0; this.heroSpeed = 0;
     this.player = actors.create('arthas'); scene.add(this.player.root); this.player.root.position.copy(world.start || new THREE.Vector3(0, 0, 20)); this.player.root.rotation.y = Math.PI;
@@ -129,7 +129,7 @@ export class Game {
       get threatStage() { return self.threatStage; }, get kills() { return self.kills; }, get fps() { return Math.round(self.fps); },
       get cooldowns() { return { ...self.cooldowns }; },
       get audio() { return self.audio.status; },
-      get summary() { return { survival:{revision:'blue-aura-v1',angel:self.angel.summary,mode:'endless',best:{...self.record.best},pressure:hordePressure(self.gameTime,self.kills,self.quality),spawned:self.horde.spawned,bossesSpawned:self.horde.bossesSpawned,unlocked:{...self.unlocked},relics:self.world.destruction?.relics||[],supplies:self.supplies?.summary},aura:self.aura?.summary,holyVfx:self.holyVfx?.summary, ...self.enemyCensus(), environment:self.environmentSummary(), state: self._state, threatStage: self.threatStage, kills: self.kills, activeCap: self.activeCap, time: Math.round(self.gameTime), maxCombo: self.maxCombo, action: self._action, actionProgress: self.actionProgress(), actionDuration: self._actionDuration, contactFired: self._actionFired, comboStep: self.comboStep, speed: self.heroSpeed, hitstop: self._hitstop, camera: { yaw: self.viewYaw, pitch: self.viewPitch, distance: self.viewDistance, height: self.camera.position.y, occlusion: self.world.getOcclusionState?.().filter(v=>v.fade>.02).map(v=>({name:v.name,fade:Math.round(v.fade*100)/100})) || [] }, corpses: self.enemies.filter(e=>e.dead).map(e=>({id:e.id,age:e.deathAge,progress:enemyDeathState(e).dead,fade:enemyDeathState(e).fade})) }; },
+      get summary() { return { survival:{revision:'local-combat-polish-v2',angel:self.angel.summary,mode:'endless',best:{...self.record.best},pressure:hordePressure(self.gameTime,self.kills,self.quality),spawned:self.horde.spawned,bossesSpawned:self.horde.bossesSpawned,unlocked:{...self.unlocked},relics:self.world.destruction?.relics||[],supplies:self.supplies?.summary},aura:self.aura?.summary,holyVfx:self.holyVfx?.summary, ...self.enemyCensus(), environment:self.environmentSummary(), state: self._state, threatStage: self.threatStage, kills: self.kills, activeCap: self.activeCap, time: Math.round(self.gameTime), maxCombo: self.maxCombo, action: self._action, actionProgress: self.actionProgress(), actionDuration: self._actionDuration, contactFired: self._actionFired, comboStep: self.comboStep, speed: self.heroSpeed, hitstop: self._hitstop, camera: { yaw: self.viewYaw, pitch: self.viewPitch, distance: self.viewDistance, height: self.camera.position.y, occlusion: self.world.getOcclusionState?.().filter(v=>v.fade>.02).map(v=>({name:v.name,fade:Math.round(v.fade*100)/100})) || [] }, corpses: self.enemies.filter(e=>e.dead).map(e=>({id:e.id,age:e.deathAge,progress:enemyDeathState(e).dead,fade:enemyDeathState(e).fade})) }; },
     });
     this.updateHUD(); this.showMenu('start');
     document.getElementById('loading-screen')?.remove();
@@ -240,7 +240,7 @@ export class Game {
       <div class="utility"><button id="pause-button" aria-label="暂停游戏"><kbd>ESC</kbd>暂停</button><button id="fullscreen-button" aria-label="进入全屏"><kbd>F</kbd><span>全屏</span></button><button id="sound-button" aria-label="静音切换">声音 · 开</button></div>
       <div class="health-panel"><div class="portrait">${portraitSvg}</div><div class="hero-info"><div class="hero-name">阿尔萨斯</div><div class="hero-class">圣骑士 · 白银之手</div><div class="life-pips" role="img" aria-label="生命 3 格，共 3 格"><i></i><i></i><i></i></div><div class="health-track"><div class="health-fill"></div><span class="health-text">3 / 3</span></div><div class="health-help">三格生命 · 靠近血包回复一格</div></div></div>
       <div class="ability-bar">${ability('j','hammer','J','圣锤连击','J / 鼠标左键 · 圣锤连击（按住连续攻击）')}${ability('q','whirl','Q','神圣风暴','Q · 神圣风暴 · 8 秒冷却')}${ability('e','consecrate','E','奉 献','E · 奉献 · 12 秒冷却')}${ability('space','dodge','空格','圣翼闪避','空格 · 圣翼闪避 · 2 秒冷却')}</div>
-      <div class="angel-meter"><div class="angel-meter-title"><span>+ 天使降临</span><b class="angel-meter-value">0 / 12</b></div><div class="angel-meter-track"><i></i></div><div class="angel-meter-help">击杀 12 名亡灵唤醒圣翼</div></div><div class="kill-panel"><div class="kill-label">净 化 之 魂</div><div class="kill-count">00</div><div class="kill-total">SOULS CLEANSED</div></div>
+      <div class="angel-meter"><div class="angel-meter-title"><span>+ 天使降临</span><b class="angel-meter-value">0 / ${ANGEL.killsRequired}</b></div><div class="angel-meter-track"><i></i></div><div class="angel-meter-help">击杀 ${ANGEL.killsRequired} 名亡灵唤醒圣翼</div></div><div class="kill-panel"><div class="kill-label">净 化 之 魂</div><div class="kill-count">00</div><div class="kill-total">SOULS CLEANSED</div></div>
       <div class="combo"><strong>0</strong><span>连 斩</span></div><div class="toast"><div class="toast-title"></div><div class="toast-sub"></div></div>
       <div class="boss-panel" hidden><div class="boss-name">恐惧魔王 · 长夜领主</div><div class="boss-track"><div class="boss-fill"></div></div></div>
       <div class="onboarding"><span><kbd>W A S D</kbd>移动</span><span><kbd>右键拖动</kbd>视角</span><span><kbd>滚轮</kbd>远近</span><span><kbd>R</kbd>镜头归中</span><span><kbd>J / 左键</kbd>连击</span></div>
@@ -265,7 +265,7 @@ export class Game {
     this.dom.modal.hidden = false; this.dom.modal.className = `modal-layer ${type === 'start' ? 'start' : ''}`;
     const btn = (id, text, primary = false) => `<button id="menu-${id}" class="menu-button ${primary ? 'primary' : 'secondary'}">${text}<span class="arrow">&gt;</span></button>`;
     let content = '';
-    if (type === 'start') content = `<div class="menu-eyebrow">LORDAERON · THE FALLEN CITY</div><div class="menu-crest">${svg('consecrate')}</div><h2 class="menu-title">斯坦索姆</h2><div class="menu-subtitle">余烬中的誓言</div><div class="menu-divider"></div><p class="menu-description">钟声已停。火焰还在燃烧。<br>尸潮永不停歇，挑战你能坚持的极限。<br>满血只能承受三次攻击，拾取血包才能回血。<br>打碎南街与东巷的圣物，唤醒 Q／E 技能。<br>击杀 12 名亡灵，唤醒五秒无敌天使。</p>${btn('start','踏 入 旧 城',true)}${btn('settings','画 面 与 声 音')}<p class="menu-controls desktop-guide"><strong>WASD</strong> 移动　<strong>J</strong> 连击　<strong>Q / E</strong> 圣物解锁<br>右键拖动视角 · 滚轮远近 · <strong>R</strong> 归中<br><strong>SPACE</strong> 闪避</p><p class="menu-controls touch-guide">左侧摇杆移动 · 右侧按住圣锤连击<br>拖动街道转动视角 · 双指缩放<br>横屏游玩视野更宽 · 点击圣翼闪避</p><div class="menu-fineprint">无尽尸潮 · 越战越险 · 领主反复来袭<br>${this.record.persistent ? '本地最佳' : '本次最佳'} ${formatSurvivalTime(this.record.best.seconds)} · ${this.record.best.kills} 净化之魂<br>同人致敬作品 · 非官方出品</div>`;
+    if (type === 'start') content = `<div class="menu-eyebrow">LORDAERON · THE FALLEN CITY</div><div class="menu-crest">${svg('consecrate')}</div><h2 class="menu-title">斯坦索姆</h2><div class="menu-subtitle">余烬中的誓言</div><div class="menu-divider"></div><p class="menu-description">钟声已停。火焰还在燃烧。<br>尸潮永不停歇，挑战你能坚持的极限。<br>满血只能承受三次攻击，拾取血包才能回血。<br>打碎南街与东巷的圣物，唤醒 Q／E 技能。<br>击杀 ${ANGEL.killsRequired} 名亡灵，唤醒五秒无敌天使。</p>${btn('start','踏 入 旧 城',true)}${btn('settings','画 面 与 声 音')}<p class="menu-controls desktop-guide"><strong>WASD</strong> 移动　<strong>J</strong> 连击　<strong>Q / E</strong> 圣物解锁<br>右键拖动视角 · 滚轮远近 · <strong>R</strong> 归中<br><strong>SPACE</strong> 闪避</p><p class="menu-controls touch-guide">左侧摇杆移动 · 右侧按住圣锤连击<br>拖动街道转动视角 · 双指缩放<br>横屏游玩视野更宽 · 点击圣翼闪避</p><div class="menu-fineprint">无尽尸潮 · 越战越险 · 领主反复来袭<br>${this.record.persistent ? '本地最佳' : '本次最佳'} ${formatSurvivalTime(this.record.best.seconds)} · ${this.record.best.kills} 净化之魂<br>同人致敬作品 · 非官方出品</div>`;
     if (type === 'pause') content = `<div class="menu-crest">${svg('consecrate')}</div><div class="menu-eyebrow">THE LIGHT WILL WAIT</div><h2 class="menu-title">誓言未歇</h2><p class="menu-description">旧城的时间，暂时停在此刻。</p>${btn('resume','继 续 征 战',true)}${btn('settings','画 面 与 声 音')}${btn('restart','重 新 开 始')}${btn('home','返 回 主 菜 单')}`;
     if (type === 'settings') content = `<div class="menu-eyebrow">SETTINGS</div><h2 class="menu-title">画面与声音</h2>
       <label class="setting-row">总音量<input aria-label="总音量" id="volume-setting" type="range" min="0" max="100" value="${Math.round(this.audio.volume * 100)}"></label>
@@ -370,7 +370,7 @@ export class Game {
     for (const effect of this.effects) this.disposeEffect(effect); this.effects.length = 0;this.holyVfx?.reset();
     for (const floater of this.floaters) floater.el.remove(); this.floaters.length = 0;
     this.resetEnvironment();this.supplies?.reset();this.unlocked={q:false,e:false};
-    this.keys.clear();this.touchControls?.reset(); this.inputAttack = false; this.drag = false; this.hp = this.maxHp; this.gameTime = 0; this.kills = 0; this.threatStage = 1;
+    this.keys.clear();this.touchControls?.reset(); this.inputAttack = false; this.drag = false; this.hp = this.maxHp; this.gameTime = 0; this.kills = 0; this.threatStage = 1; this.threatNotice=0;
     this.combo = 0; this.comboTimer = 0; this.maxCombo = 0;
     this.resetActions(true); this._combatTime = 0; this.heroSpeed = 0; this.stepDistance = 0; this.stepVariant = 0; this.groanTimer = 2.5; this.audio.silence(); this.invincible = 0; this.hitFlash = 0; this.shake = 0; this.cooldowns = { q: 0, e: 0, space: 0 };
     this.player.root.position.copy(this.world.start || new THREE.Vector3(0,0,20)); this.player.root.rotation.y = Math.PI;
@@ -477,7 +477,7 @@ export class Game {
         this.damageEnemy(enemy, heavy ? 65 : 38, heavy ? 4.7 : 2.3, heavy); hits++;
       }
     }
-    if (hits) { this.shake = Math.max(this.shake, heavy ? .18 : .085); this.audio.play(heavy?'heavy':'hit',heavy?1:.85,{variant:this.comboStep}); this._hitstop=heavy?.065:.045; }
+    if (hits) { this.shake = Math.max(this.shake, heavy ? .18 : .085); this.audio.play(heavy?'heavy':'hit',heavy?1:.85,{variant:this.comboStep}); this._hitstop=heavy?.10:.065; }
     this.damageEnvironment({position:this.player.root.position,direction:facing,radius:heavy?3.8:3.3,arc:Math.acos(heavy?-.4:-.13)*2,damage:heavy?65:38,source:'melee',attackId:this._environmentAttackId});
   }
   skill(id) {
@@ -537,8 +537,12 @@ export class Game {
   damageEnemy(enemy, amount, knock = 0, critical = false, origin=this.player.root.position,source='hero') {
     if (enemy.dead || enemy.decorative || this._state!=='playing') return;
     const judgement=this.angel?.active&&source!=='environment';if(judgement){amount=Math.max(amount,enemy.hp);critical=true;}
-    enemy.hp -= amount; enemy.hit = .23; enemy.stun = Math.max(enemy.stun,enemy.stunDuration); enemy.attackTimer=0;
-    enemy.knock.copy(enemy.actor.root.position).sub(origin).setY(0).normalize().multiplyScalar(knock*enemy.knockScale);
+    enemy.hp -= amount;
+    enemy.hitDuration=(enemy.boss?.30:enemy.large?.48:.62)*(critical?1.12:1);
+    enemy.hit=enemy.hitDuration;enemy.hitStrength=critical?1.2:1;
+    enemy.stun=Math.max(enemy.stun,enemy.stunDuration*(critical?1.18:1));
+    enemy.attackTimer=0;enemy.attackFired=false;enemy.attackCooldown=Math.max(enemy.attackCooldown,enemy.stun+.16);
+    enemy.knock.copy(enemy.actor.root.position).sub(origin).setY(0).normalize().multiplyScalar(knock*enemy.knockScale*(critical?1.28:1.55));
     this.floating(enemy.actor.root.position,judgement?'裁决':amount,critical?'critical':'',enemy.healthBarHeight);
     this.burst(enemy.actor.root.position.clone().add(new THREE.Vector3(0,enemy.impactHeight,0)),0xe4ba72,critical?12:6,1.8);
     if(enemy.hp<=0){
@@ -767,7 +771,7 @@ export class Game {
         } else if(e.attackCooldown<=0){e.attackTimer=e.attack.duration;e.attackFired=false;e.attackVariant=(e.attackVariant+1)%e.attack.variants;e.attackCooldown=THREE.MathUtils.lerp(...e.attack.cooldown,Math.random());e.actor.root.rotation.y=Math.atan2(delta.x,delta.z);}
       }
       const progress=e.attackTimer>0?1-e.attackTimer/e.attack.duration:0;
-      e.actor.update(dt,{speed,action:e.attackTimer>0?'attack':'idle',progress,attack:progress,attackContact:e.attack.contact,attackDuration:e.attack.duration,variant:e.attackVariant,hit:e.hit>0?e.hit/.23:0,dead:0,fade:0,time:time+e.phase});
+      e.actor.update(dt,{speed,action:e.attackTimer>0?'attack':'idle',progress,attack:progress,attackContact:e.attack.contact,attackDuration:e.attack.duration,variant:e.attackVariant,hit:e.hit>0?Math.min(1,e.hit/(e.hitDuration*.74)):0,hitStrength:e.hitStrength||1,dead:0,fade:0,time:time+e.phase});
     }
   }
   updateHorde(dt) {
@@ -777,7 +781,7 @@ export class Game {
     this.activeCap=pressure.cap;
     if(pressure.stage>this.threatStage){
       this.threatStage=pressure.stage;
-      this.announce(`尸潮等级 ${this.threatStage}`,`亡灵持续增援 · 街巷正被尸潮吞没`,2.8);
+      this.threatNotice=1.6;
       this.audio.play('chime',.35);
     }
     for(const entry of entries){
@@ -888,6 +892,7 @@ export class Game {
     this.updateRelicHUD();this.dom.kills.textContent=String(this.kills).padStart(2,'0');
     this.dom.clock.textContent=formatSurvivalTime(this.gameTime);
     const living=this.enemies.filter(e=>!e.dead&&!e.decorative).length;
+    this.dom.detail.classList.toggle('level-up',(this.threatNotice||0)>0);
     this.dom.detail.textContent=`尸潮等级 ${this.threatStage} · 场上 ${living} 名`;
     this.dom.best.textContent=`${this.record.persistent?'本地最佳':'本次最佳'} ${formatSurvivalTime(Math.max(this.record.best.seconds,this.gameTime))}${Math.floor(this.gameTime)>this.record.baseline?' · 新纪录':''}`;
     for(const key of ['q','e','space']){
@@ -909,7 +914,7 @@ export class Game {
     if(this._state==='ascension'){this.updateAngelCinematic(dt);return;}
     const playing=this._state==='playing';
     if(playing){
-      this.gameTime+=dt;this.recordTimer+=dt;if(this.recordTimer>=10){this.recordTimer=0;this.saveRecord();}this.invincible=Math.max(0,this.invincible-dt);this.hitFlash=Math.max(0,this.hitFlash-dt);
+      this.gameTime+=dt;this.threatNotice=Math.max(0,(this.threatNotice||0)-dt);this.recordTimer+=dt;if(this.recordTimer>=10){this.recordTimer=0;this.saveRecord();}this.invincible=Math.max(0,this.invincible-dt);this.hitFlash=Math.max(0,this.hitFlash-dt);
       for(const key in this.cooldowns)this.cooldowns[key]=Math.max(0,this.cooldowns[key]-dt);
       this.comboTimer-=dt;if(this.comboTimer<=0)this.combo=0;
       // Hitstop freezes only the hero's combat clock, movement and sampled pose.

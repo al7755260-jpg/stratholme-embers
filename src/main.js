@@ -12,6 +12,7 @@ import { loadHolyVfxAssets } from './holy-vfx.js';
 import { CaptureSceneDepth, createIllustratedPixelPass, paintPixelMaterials, pixelViewport } from './retro.js';
 import './style.css';
 import './touch-controls.css';
+import './combat-polish.css';
 import { prefersTouchControls } from './touch-controls.js';
 
 const app = document.querySelector('#app');

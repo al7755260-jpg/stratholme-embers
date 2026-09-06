@@ -1,3 +1,5 @@
+import { applyMeleeCapture } from './melee-mocap.js';
+
 /**
  * Paladin key-pose sampler for the procedural +Z-facing rig in actors.js.
  * All Euler rotations use THREE's default XYZ order, in radians. The bind arm
@@ -320,5 +322,6 @@ export function sampleHeroMotion(s = {}) {
   if(handTarget&&dead===0)out.rightHandTarget=actorLocalTarget(handTarget,out);
   // Carry and casting retain orientation control after the support hand releases.
   if(weaponEuler&&dead===0)out.weaponRotation=composeWeaponRotation(out.bodyRotation,weaponEuler);
+  if(s.action==='melee'&&dead===0)out=applyMeleeCapture(out,s);
   return out;
 }

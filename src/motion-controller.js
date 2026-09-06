@@ -94,7 +94,7 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
 
   // A stance foot travels backwards at the exact world travel rate. During the
   // other half cycle it lifts and returns, with separate dragging/heavy profiles.
-  if(dead===0&&(kind!=='arthas'||action==='idle'||(action==='melee'&&locomotion>.15))){
+  if(dead===0&&(kind!=='arthas'||action==='idle'||(action==='melee'&&(locomotion>.15||sampled.mocapWeight>0)))){
    const stance=kind==='arthas'?.52:kind==='zombie'?.63:.63;
    const stride=cycleDistance*.25/h;
    const feet=[];
@@ -106,7 +106,8 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
     const bind=joints[side+'Foot'].clone().divideScalar(h);
     const drag=kind==='zombie'&&side==='left'?.72:1;
     const extraWidth=kind==='abomination'?.022:0;
-    const target=toWorld([bind.x+sign*extraWidth,bind.y+y*locomotion,bind.z+z*locomotion*drag]);
+    const plant=(sampled.mocapWeight||0)*(1-locomotion)*sign*(state.comboStep===1?-.065:.065);
+    const target=toWorld([bind.x+sign*extraWidth,bind.y+y*locomotion,bind.z+z*locomotion*drag+plant]);
     const pole=toWorld([bind.x+sign*.02,.28,.55]);
     const footPitch=c>stance?Math.sin((c-stance)/(1-stance)*Math.PI)*(kind==='zombie'&&side==='left'?.10:.32):0;
     feet.push({side,target,pole,footPitch});
@@ -139,6 +140,8 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
    // still owns the weapon when the left hand releases it or casts a spell.
    const grip=clamp(sampled.grip||0,0,1);
    const armRoll=new THREE.Vector3(1,0,0).applyQuaternion(pose.getWorldQuaternion(new THREE.Quaternion()));
+   const elbowFrame=pose.getWorldQuaternion(new THREE.Quaternion());
+   if(sampled.mocapWeight)elbowFrame.slerp(rig.chest.getWorldQuaternion(new THREE.Quaternion()),sampled.mocapWeight);
    let rightTarget,rightPole,weaponLocal;
    if(sampled.rightHandTarget){
     const localTarget=new THREE.Vector3(...sampled.rightHandTarget);
@@ -146,7 +149,8 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
     rightTarget=toWorld(localTarget.toArray());
     // Arm poles turn with the torso during Q. A fixed world pole makes elbows
     // reverse halfway through a full spin.
-    rightPole=rig.rightArm.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(.13+.17*grip,-.13-.04*grip,-.125+.04*grip).multiplyScalar(h).applyQuaternion(pose.getWorldQuaternion(new THREE.Quaternion())));
+    rightPole=rig.rightArm.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(.13+.17*grip,-.13-.04*grip,-.125+.04*grip).multiplyScalar(h).applyQuaternion(elbowFrame));
+    if(sampled.rightElbowTarget)rightPole.lerp(toWorld(sampled.rightElbowTarget),sampled.mocapWeight||0);
     solveLimb(rig.rightArm,rig.rightForearm,rig.rightHand,rightTarget,rightPole,1,armRoll);
    }
    function placeHammer(){
@@ -207,7 +211,8 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
     keepHammerAboveGround();
     root.updateWorldMatrix(true,true);
     const target=hammer.localToWorld(new THREE.Vector3(0,.15*h,0));
-    const pole=rig.leftArm.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(-.26,-.23,.075).multiplyScalar(h).applyQuaternion(pose.getWorldQuaternion(new THREE.Quaternion())));
+    const pole=rig.leftArm.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(-.26,-.23,.075).multiplyScalar(h).applyQuaternion(elbowFrame));
+    if(sampled.leftElbowTarget)pole.lerp(toWorld(sampled.leftElbowTarget),sampled.mocapWeight||0);
     // Match palm centres, not cuff/wrist joints. Preserve the sampled wrist
     // curl while solving the arm; two refinements account for the palm offset.
     for(let i=0;i<3;i++){
@@ -219,7 +224,7 @@ export function createMotionController({kind,root,pose,rig,bones,desc,h,hammer})
    }else keepHammerAboveGround();
   }
   root.updateWorldMatrix(true,true);
-  root.userData.motion={action,progress,comboStep:state.comboStep||0,gaitPhase,locomotion,dead,grip:sampled.grip||0,footError,gripError};
+  root.userData.motion={action,progress,comboStep:state.comboStep||0,gaitPhase,locomotion,dead,grip:sampled.grip||0,footError,gripError,...(sampled.mocapFrame?{mocapFrame:sampled.mocapFrame}: {})};
   return {dead,hit:clamp(state.hit||0,0,1),fade:clamp(state.fade||0,0,1)};
  }
  return {update};

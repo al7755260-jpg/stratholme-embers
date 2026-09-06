@@ -285,11 +285,20 @@ export function sampleUndeadMotion(kind, s = {}) {
     out = blend(out, frames(keys, p), envelope);
   }
   if (hit > 0 && dead === 0) {
-    // Large bodies absorb impact in the torso; they do not hop or shift their root.
-    const weight = hit * ({ zombie: 1, forsaken: .75, abomination: .55, dreadlord: .40 }[kind]), side = variant ? -1 : 1;
-    out.rotations.spine[0] -= .16 * weight; out.rotations.chest[0] -= .20 * weight;
-    out.rotations.chest[1] += side * .11 * weight; out.rotations.head[0] -= .19 * weight;
-    out.rotations.head[2] += side * .10 * weight;
+    // Snap back at contact, hold the compressed silhouette, then ease back.
+    // Feet remain grounded while shoulders, arms, head and knees absorb weight.
+    const weight=hit*clamp(finite(s.hitStrength,1),0,1.2)*({zombie:1,forsaken:.95,abomination:.72,dreadlord:.62}[kind]);
+    const side=variant?-1:1;
+    out.rotations.spine[0]-=.29*weight;out.rotations.chest[0]-=.48*weight;
+    out.rotations.chest[1]+=side*.24*weight;out.rotations.head[0]-=.37*weight;
+    out.rotations.head[2]+=side*.20*weight;
+    out.rotations.rightArm[0]-=.34*weight;out.rotations.leftArm[0]-=.29*weight;
+    out.rotations.rightForearm[0]-=.20*weight;out.rotations.leftForearm[0]-=.17*weight;
+    out.rotations.rightThigh[0]-=.16*weight;out.rotations.leftThigh[0]-=.11*weight;
+    out.rotations.rightShin[0]+=.25*weight;out.rotations.leftShin[0]+=.20*weight;
+    out.hipsOffset[1]-=.030*weight;
+    out.bodyRotation[2]+=side*.09*weight;
+
   }
   if (dead > 0) {
     const keys = variant ? DEATH_OTHER[kind] : DEATH[kind];

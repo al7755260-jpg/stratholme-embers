@@ -1,4 +1,4 @@
-export const ANGEL = Object.freeze({ killsRequired: 12, cinematicSeconds: 2, activeSeconds: 5 });
+export const ANGEL = Object.freeze({ killsRequired: 120, cinematicSeconds: 2, activeSeconds: 5 });
 
 // The game owns both clocks. No wall-clock callbacks can outlive pause/restart.
 export class AngelPower {
