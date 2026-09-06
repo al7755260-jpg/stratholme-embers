@@ -122,7 +122,10 @@ export function paintPixelMaterials(root){
 
 export function pixelViewport(w,h,quality='high'){
  const low=quality==='low'||quality==='performance';
- const scale=low?Math.max(2,Math.round(h/240)):Math.max(1,w/960,h/540);
+ // Bound the long and short edges, so rotating a phone never throws away
+ // two thirds of its detail. Lightweight quality saves on effects, not a
+ // 240-pixel-tall image stretched across the entire phone screen.
+ const scale=Math.max(1,Math.min(w,h)/(low?480:540),Math.max(w,h)/960);
  return {w:Math.max(1,Math.round(w/scale)),h:Math.max(1,Math.round(h/scale)),scale};
 }
 
