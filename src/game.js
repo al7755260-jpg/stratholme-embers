@@ -129,7 +129,7 @@ export class Game {
       get threatStage() { return self.threatStage; }, get kills() { return self.kills; }, get fps() { return Math.round(self.fps); },
       get cooldowns() { return { ...self.cooldowns }; },
       get audio() { return self.audio.status; },
-      get summary() { return { survival:{revision:'local-combat-polish-v2',angel:self.angel.summary,mode:'endless',best:{...self.record.best},pressure:hordePressure(self.gameTime,self.kills,self.quality),spawned:self.horde.spawned,bossesSpawned:self.horde.bossesSpawned,unlocked:{...self.unlocked},relics:self.world.destruction?.relics||[],supplies:self.supplies?.summary},aura:self.aura?.summary,holyVfx:self.holyVfx?.summary, ...self.enemyCensus(), environment:self.environmentSummary(), state: self._state, threatStage: self.threatStage, kills: self.kills, activeCap: self.activeCap, time: Math.round(self.gameTime), maxCombo: self.maxCombo, action: self._action, actionProgress: self.actionProgress(), actionDuration: self._actionDuration, contactFired: self._actionFired, comboStep: self.comboStep, speed: self.heroSpeed, hitstop: self._hitstop, camera: { yaw: self.viewYaw, pitch: self.viewPitch, distance: self.viewDistance, height: self.camera.position.y, occlusion: self.world.getOcclusionState?.().filter(v=>v.fade>.02).map(v=>({name:v.name,fade:Math.round(v.fade*100)/100})) || [] }, corpses: self.enemies.filter(e=>e.dead).map(e=>({id:e.id,age:e.deathAge,progress:enemyDeathState(e).dead,fade:enemyDeathState(e).fade})) }; },
+      get summary() { return { survival:{revision:'compact-hud-v1',angel:self.angel.summary,mode:'endless',best:{...self.record.best},pressure:hordePressure(self.gameTime,self.kills,self.quality),spawned:self.horde.spawned,bossesSpawned:self.horde.bossesSpawned,unlocked:{...self.unlocked},relics:self.world.destruction?.relics||[],supplies:self.supplies?.summary},aura:self.aura?.summary,holyVfx:self.holyVfx?.summary, ...self.enemyCensus(), environment:self.environmentSummary(), state: self._state, threatStage: self.threatStage, kills: self.kills, activeCap: self.activeCap, time: Math.round(self.gameTime), maxCombo: self.maxCombo, action: self._action, actionProgress: self.actionProgress(), actionDuration: self._actionDuration, contactFired: self._actionFired, comboStep: self.comboStep, speed: self.heroSpeed, hitstop: self._hitstop, camera: { yaw: self.viewYaw, pitch: self.viewPitch, distance: self.viewDistance, height: self.camera.position.y, occlusion: self.world.getOcclusionState?.().filter(v=>v.fade>.02).map(v=>({name:v.name,fade:Math.round(v.fade*100)/100})) || [] }, corpses: self.enemies.filter(e=>e.dead).map(e=>({id:e.id,age:e.deathAge,progress:enemyDeathState(e).dead,fade:enemyDeathState(e).fade})) }; },
     });
     this.updateHUD(); this.showMenu('start');
     document.getElementById('loading-screen')?.remove();
@@ -235,12 +235,12 @@ export class Game {
     const ability = (id, icon, key, name, tooltip) => `<button class="ability ready" id="ability-${id}" title="${tooltip}" aria-label="${tooltip}"><span class="ability-icon">${svg(icon)}<span class="ability-cooldown" hidden></span></span><span class="ability-key">${key}</span><span class="ability-name">${name}</span></button>`;
     ui.innerHTML = `<div class="vignette"></div><div class="damage-vignette"></div>
       <div class="zone-title"><h1>斯坦索姆</h1><p>余烬中的誓言</p><div class="chapter">THE CULLING · OLD TOWN</div></div>
-      <div class="objective"><div class="objective-title">无尽生存</div><div class="survival-score"><div class="survival-clock" role="timer" aria-label="本局存活时间">00:00</div><div class="objective-detail">尸潮等级 1</div><div class="survival-best"></div></div><div class="relic-objective"></div></div>
+      <div class="objective"><div class="objective-title">无尽生存</div><div class="survival-score"><div class="survival-clock" role="timer" aria-label="本局存活时间">00:00</div><div class="objective-detail">尸潮等级 1</div><div class="survival-best"></div><div class="kill-panel"><span class="kill-label">净化</span><span class="kill-count">00</span></div></div><div class="angel-meter"><div class="angel-meter-title"><span>+ 天使降临</span><b class="angel-meter-value">0 / ${ANGEL.killsRequired}</b></div><div class="angel-meter-track"><i></i></div><div class="angel-meter-help">击杀 ${ANGEL.killsRequired} 名亡灵唤醒圣翼</div></div><div class="relic-objective"></div></div>
       <div class="map-frame"><canvas width="128" height="128" id="minimap"></canvas><span class="compass-n">N</span><div class="map-label"><span class="map-location">旧城南街</span> · 瘟疫区</div></div>
       <div class="utility"><button id="pause-button" aria-label="暂停游戏"><kbd>ESC</kbd>暂停</button><button id="fullscreen-button" aria-label="进入全屏"><kbd>F</kbd><span>全屏</span></button><button id="sound-button" aria-label="静音切换">声音 · 开</button></div>
       <div class="health-panel"><div class="portrait">${portraitSvg}</div><div class="hero-info"><div class="hero-name">阿尔萨斯</div><div class="hero-class">圣骑士 · 白银之手</div><div class="life-pips" role="img" aria-label="生命 3 格，共 3 格"><i></i><i></i><i></i></div><div class="health-track"><div class="health-fill"></div><span class="health-text">3 / 3</span></div><div class="health-help">三格生命 · 靠近血包回复一格</div></div></div>
       <div class="ability-bar">${ability('j','hammer','J','圣锤连击','J / 鼠标左键 · 圣锤连击（按住连续攻击）')}${ability('q','whirl','Q','神圣风暴','Q · 神圣风暴 · 8 秒冷却')}${ability('e','consecrate','E','奉 献','E · 奉献 · 12 秒冷却')}${ability('space','dodge','空格','圣翼闪避','空格 · 圣翼闪避 · 2 秒冷却')}</div>
-      <div class="angel-meter"><div class="angel-meter-title"><span>+ 天使降临</span><b class="angel-meter-value">0 / ${ANGEL.killsRequired}</b></div><div class="angel-meter-track"><i></i></div><div class="angel-meter-help">击杀 ${ANGEL.killsRequired} 名亡灵唤醒圣翼</div></div><div class="kill-panel"><div class="kill-label">净 化 之 魂</div><div class="kill-count">00</div><div class="kill-total">SOULS CLEANSED</div></div>
+
       <div class="combo"><strong>0</strong><span>连 斩</span></div><div class="toast"><div class="toast-title"></div><div class="toast-sub"></div></div>
       <div class="boss-panel" hidden><div class="boss-name">恐惧魔王 · 长夜领主</div><div class="boss-track"><div class="boss-fill"></div></div></div>
       <div class="onboarding"><span><kbd>W A S D</kbd>移动</span><span><kbd>右键拖动</kbd>视角</span><span><kbd>滚轮</kbd>远近</span><span><kbd>R</kbd>镜头归中</span><span><kbd>J / 左键</kbd>连击</span></div>
@@ -254,6 +254,8 @@ export class Game {
       const full = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
       const button = ui.querySelector('#fullscreen-button');
       button.querySelector('span').textContent = full ? '退出全屏' : '全屏'; button.setAttribute?.('aria-label', full ? '退出全屏' : '进入全屏');
+      const menuButton = ui.querySelector('#menu-fullscreen');
+      if (menuButton) { menuButton.textContent = full ? '退出全屏' : '全屏'; menuButton.setAttribute('aria-label', full ? '退出全屏' : '进入全屏'); }
     };
     document.addEventListener?.('fullscreenchange', syncFullscreen); document.addEventListener?.('webkitfullscreenchange', syncFullscreen);
     ui.querySelector('#sound-button').addEventListener('click', () => { this.audio.toggleMute(); this.syncSoundButton(); });
@@ -266,7 +268,7 @@ export class Game {
     const btn = (id, text, primary = false) => `<button id="menu-${id}" class="menu-button ${primary ? 'primary' : 'secondary'}">${text}<span class="arrow">&gt;</span></button>`;
     let content = '';
     if (type === 'start') content = `<div class="menu-eyebrow">LORDAERON · THE FALLEN CITY</div><div class="menu-crest">${svg('consecrate')}</div><h2 class="menu-title">斯坦索姆</h2><div class="menu-subtitle">余烬中的誓言</div><div class="menu-divider"></div><p class="menu-description">钟声已停。火焰还在燃烧。<br>尸潮永不停歇，挑战你能坚持的极限。<br>满血只能承受三次攻击，拾取血包才能回血。<br>打碎南街与东巷的圣物，唤醒 Q／E 技能。<br>击杀 ${ANGEL.killsRequired} 名亡灵，唤醒五秒无敌天使。</p>${btn('start','踏 入 旧 城',true)}${btn('settings','画 面 与 声 音')}<p class="menu-controls desktop-guide"><strong>WASD</strong> 移动　<strong>J</strong> 连击　<strong>Q / E</strong> 圣物解锁<br>右键拖动视角 · 滚轮远近 · <strong>R</strong> 归中<br><strong>SPACE</strong> 闪避</p><p class="menu-controls touch-guide">左侧摇杆移动 · 右侧按住圣锤连击<br>拖动街道转动视角 · 双指缩放<br>横屏游玩视野更宽 · 点击圣翼闪避</p><div class="menu-fineprint">无尽尸潮 · 越战越险 · 领主反复来袭<br>${this.record.persistent ? '本地最佳' : '本次最佳'} ${formatSurvivalTime(this.record.best.seconds)} · ${this.record.best.kills} 净化之魂<br>同人致敬作品 · 非官方出品</div>`;
-    if (type === 'pause') content = `<div class="menu-crest">${svg('consecrate')}</div><div class="menu-eyebrow">THE LIGHT WILL WAIT</div><h2 class="menu-title">誓言未歇</h2><p class="menu-description">旧城的时间，暂时停在此刻。</p>${btn('resume','继 续 征 战',true)}${btn('settings','画 面 与 声 音')}${btn('restart','重 新 开 始')}${btn('home','返 回 主 菜 单')}`;
+    if (type === 'pause') content = `<div class="menu-crest">${svg('consecrate')}</div><div class="menu-eyebrow">THE LIGHT WILL WAIT</div><h2 class="menu-title">誓言未歇</h2><p class="menu-description">旧城的时间，暂时停在此刻。</p><div class="menu-quick-actions"><button id="menu-fullscreen">全屏</button><button id="menu-sound">声音</button></div>${btn('resume','继 续 征 战',true)}${btn('settings','画 面 与 声 音')}${btn('restart','重 新 开 始')}${btn('home','返 回 主 菜 单')}`;
     if (type === 'settings') content = `<div class="menu-eyebrow">SETTINGS</div><h2 class="menu-title">画面与声音</h2>
       <label class="setting-row">总音量<input aria-label="总音量" id="volume-setting" type="range" min="0" max="100" value="${Math.round(this.audio.volume * 100)}"></label>
       <label class="setting-row">打击与环境音效<input aria-label="音效音量" id="effects-setting" type="range" min="0" max="100" value="${Math.round(this.audio.effectsVolume * 100)}"></label>
@@ -283,6 +285,11 @@ export class Game {
     on('start', () => this.start()); on('restart', () => this.start()); on('resume', () => this.resume());
     on('settings', () => { this.menuReturn = type; this.showMenu('settings'); });
     on('back', () => this.showMenu(this.menuReturn || 'start'));
+    on('fullscreen',()=>this.toggleFullscreen());
+    const menuFullscreen=this.dom.modalContent.querySelector('#menu-fullscreen');
+    if(menuFullscreen){const full=Boolean(document.fullscreenElement||document.webkitFullscreenElement);menuFullscreen.textContent=full?'退出全屏':'全屏';menuFullscreen.setAttribute('aria-label',full?'退出全屏':'进入全屏');}
+    on('sound',()=>{this.audio.toggleMute();this.syncSoundButton();});
+    this.syncSoundButton();
     on('home', () => { this.reset(); this._state = 'menu'; this.audio.setMode('menu'); this.audio.start(); this.spawnMenuEnemies(); this.showMenu('start'); });
     this.dom.modalContent.querySelector('#volume-setting')?.addEventListener('input', e => { this.audio.setVolume(Number(e.target.value) / 100); this.syncSoundButton(); });
     this.dom.modalContent.querySelector('#effects-setting')?.addEventListener('input', e => this.audio.setEffectsVolume(Number(e.target.value) / 100));
@@ -292,7 +299,7 @@ export class Game {
   }
   syncSoundButton() {
     const muted=this.audio.status.muted || this.audio.volume===0;
-    this.ui.querySelector('#sound-button').textContent=`声音 · ${muted?'关':'开'}`;
+    for(const selector of ['#sound-button','#menu-sound']){const button=this.ui.querySelector(selector);if(button){button.textContent=`声音 · ${muted?'关':'开'}`;button.setAttribute?.('aria-label',muted?'开启声音':'静音');}}
   }
   beginAngelDescent() {
     if(this._state!=='playing'||this.hp<=0||!this.angel.begin())return false;
@@ -528,7 +535,7 @@ export class Game {
   }
   updateRelicHUD(){
     if(!this.dom.relicObjective)return;const p=this.player.root.position,remaining=RELICS.filter(r=>!this.unlocked?.[r.ability]);
-    this.dom.relicObjective.innerHTML=remaining.map(r=>`<span><b>${r.ability.toUpperCase()}</b> ${r.area}圣物 · ${Math.round(Math.hypot(p.x-r.x,p.z-r.z))}m</span>`).join('');
+    this.dom.relicObjective.innerHTML=remaining.map(r=>`<span title="${r.area} · ${r.name} · 解锁${r.skill}" aria-label="${r.area}圣物，解锁${r.skill}"><b>${r.ability.toUpperCase()}</b> ${Math.round(Math.hypot(p.x-r.x,p.z-r.z))}m</span>`).join('');
     this.dom.relicObjective.hidden=remaining.length===0;
     const nearby=remaining.find(r=>Math.hypot(p.x-r.x,p.z-r.z)<5),state=nearby&&(this.world.destruction?.relics||[]).find(r=>r.id===nearby.id);
     this.dom.relicHint.hidden=!nearby||this._state!=='playing';
@@ -893,7 +900,7 @@ export class Game {
     this.dom.clock.textContent=formatSurvivalTime(this.gameTime);
     const living=this.enemies.filter(e=>!e.dead&&!e.decorative).length;
     this.dom.detail.classList.toggle('level-up',(this.threatNotice||0)>0);
-    this.dom.detail.textContent=`尸潮等级 ${this.threatStage} · 场上 ${living} 名`;
+    this.dom.detail.textContent=`尸潮 ${this.threatStage} · ${living} 名`;
     this.dom.best.textContent=`${this.record.persistent?'本地最佳':'本次最佳'} ${formatSurvivalTime(Math.max(this.record.best.seconds,this.gameTime))}${Math.floor(this.gameTime)>this.record.baseline?' · 新纪录':''}`;
     for(const key of ['q','e','space']){
       const button=this.ui.querySelector(`#ability-${key}`),cd=button.querySelector('.ability-cooldown'),locked=key!=='space'&&!this.unlocked?.[key];
